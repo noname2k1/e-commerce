@@ -6,8 +6,9 @@ function connect_to_mysql_using_PDO()
     $db_name = "ecommerce";
     $db_user = "admin";
     $db_pass = "Nam123456";
+    $port='3306';
 
-    $pdo_conn = new PDO("mysql:host={$db_localhost};dbname={$db_name}", $db_user, $db_pass);
+    $pdo_conn = new PDO("mysql:host={$db_localhost};port={$port};dbname={$db_name}", $db_user, $db_pass);
     $pdo_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $pdo_conn;
 }
