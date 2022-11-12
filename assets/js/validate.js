@@ -86,8 +86,9 @@ const validateForm = (callback) => {
             );
         }
         if (
+            $('input[name="cfpassword"]') &&
             $('input[name="password"]').val() !==
-            $('input[name="cfpassword"]').val()
+                $('input[name="cfpassword"]').val()
         ) {
             $('input[name="cfpassword"]').addClass('invalid');
             return displayToast(
