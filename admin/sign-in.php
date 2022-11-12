@@ -38,6 +38,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
         integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="./assets/img/Chomerce - logo.svg" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/base.css" />
     <link rel="stylesheet" href="../assets/css/grid/grid.css" />
     <link rel="stylesheet" href="../assets/css/auth/auth.css" />
