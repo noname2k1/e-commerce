@@ -2,52 +2,32 @@
 //connect to PDO
 function connect_to_mysql_using_PDO()
 {
-    $db_localhost = "ql-banhang.cajq2vqpa1ir.ap-northeast-3.rds.amazonaws.com";
-    $db_name = "ecommerce";
-    $db_user = "admin";
-    $db_pass = "Nam123456";
-    $port='3306';
-    $conn = new mysqli($db_localhost, $db_user, $db_pass, $db_name, $port);
-    if ($conn -> connect_errno) {
-        echo "Failed to connect to MySQL: " . $conn -> connect_error;
-        exit();
-      }
-    // $pdo_conn = new PDO("mysql:host={$db_localhost};port={$port};dbname={$db_name}", $db_user, $db_pass);
-    // $pdo_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    return $conn;
+    $db_localhost = "o2olb7w3xv09alub.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
+    $db_name = "mvxw697fpl0bwu4d";
+    $db_user = "lsh6t63uwmzzjta8";
+    $db_pass = "cfn9xj3igrnl9hbl";
+    $db_port = "3306";
+    // mysql://lsh6t63uwmzzjta8:cfn9xj3igrnl9hbl@o2olb7w3xv09alub.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/mvxw697fpl0bwu4d
+    $pdo_conn = new PDO("mysql:host={$db_localhost};port={$db_port};dbname={$db_name}", $db_user, $db_pass);
+    $pdo_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    return $pdo_conn;
 }
 //fetch all using PDO
-function pdo_fetch_all($sql)
+function pdo_fetch_all($query)
 {
-    $db_localhost = "ql-banhang.cajq2vqpa1ir.ap-northeast-3.rds.amazonaws.com";
-    $db_name = "ecommerce";
-    $db_user = "admin";
-    $db_pass = "Nam123456";
-    $port='3306';
-    $conn = new mysqli($db_localhost, $db_user, $db_pass, $db_name, $port);
-    if ($conn -> connect_errno) {
-        echo "Failed to connect to MySQL: " . $conn -> connect_error;
-        exit();
-      }
-    // $sql_arcs = array_slice(func_get_args(), 1);
-    // try {
-        // $conn = connect_to_mysql_using_PDO();
-        // $stmt = $conn->prepare($sql);
-        // $stmt->execute($sql_arcs);
-        // $result = $stmt->fetchAll();
-        // Fetch all
-        $result = $conn -> query($sql);
-        $result -> fetch_all(MYSQLI_ASSOC);
+    $sql_arcs = array_slice(func_get_args(), 1);
+    try {
+        $conn = connect_to_mysql_using_PDO();
+        $stmt = $conn->prepare($query);
+        $stmt->execute($sql_arcs);
+        $result = $stmt->fetchAll();
         return $result;
-    // } catch (PDOException $e) {
-    //    return "error: " . $e->getMessage();
-    // } finally {
+    } catch (PDOException $e) {
+       return "error: " . $e->getMessage();
+    } finally {
         // disconnect
-        // unset($conn);
-         // Free result set
-         $result -> free_result();
-        $conn -> close();
-    // }
+        unset($conn);
+    }
 
 }
 //fetch only one  using PDO
