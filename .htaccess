@@ -1,0 +1,7 @@
+#auto start session
+php_value session.auto_start 1
+
+# redirect to not-found page
+ErrorDocument 404 ../error/not-found.php
+
+RewriteRule ^(([^/]+/)*[^.]+)$ /$1.php [L]

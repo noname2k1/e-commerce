@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 1rem;
+}
+
+:root {
+
+    --header-height: 80px;
+    --width-primary: 1060px;
+    --mobile-nav-height: 56px;
+    --bg-primary: #fff;
+    --bg-secondary: #f2f2f2;
+    --color-primary: #000;
+    --color-secondary: #fff;
+    --marine-color: #000032;
+    --orange-color: #F6A973;
+    --ice-color: #E3F5FF;
+    --mint-color: #F1FFF2;
+    --coral-color: #FFE0E0;
+    --apricot-color: #F9E4D3;
+    --rose-color: #FBF2F4;
+    --lavender-color: #F8F1FF;
+    --valina-color: #FFFAF5;
+    --green-color: #439F7E;
+    --blue-color: #2E54FF;
+
+    --white-05-color: #F2F2F2;
+    --white-15-color: #D9D9D9;
+    --white-30-color: #B3B3B3;
+    --white-40-color: #999999;
+
+    --black-50-color: #808080;
+    --black-60-color: #666666;
+    --black-70-color: #4D4D4D;
+    --black-90-color: #1A1A1A;
+
+    --frost-color: #13315C;
+    --pine-color: #14433A;
+    --root-color: #4E0009;
+    --flg-color: #7C183C;
+    --blue-sky-color: #8CC8FA;
+    --box-shadow: 3px 1px 23px 1px rgba(0, 0, 0, 0.47);
+    --webkit-box-shadow: 3px 1px 23px 1px rgba(0, 0, 0, 0.47);
+    --moz-box-shadow: 3px 1px 23px 1px rgba(0, 0, 0, 0.47);
+    ;
+}
+
+body {
+    /* overflow: hidden; */
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+@media screen and (min-width: 741px) {
+    .mobile {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 740px) {
+    .mobile {
+        display: block;
+    }
+}
+
+input:valid {
+    border: 1px solid green;
+}
+
+input.invalid {
+    border: 1px solid red;
+}

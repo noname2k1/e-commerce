@@ -1,0 +1,140 @@
+#auth-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-primary);
+}
+#auth-container .auth-wrapper {
+  background: inherit;
+  width: 400px;
+  padding: 24px;
+  gap: 10px;
+  box-shadow: var(--box-shadow);
+  border-radius: 8px;
+}
+#auth-container .auth-wrapper h1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+#auth-container .auth-wrapper h1 a.go-home {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  background-color: transparent;
+}
+@media (max-width: 576px) {
+  #auth-container .auth-wrapper {
+    width: 100vw;
+    height: 100vh;
+    border-radius: unset;
+    box-shadow: unset;
+  }
+}
+#auth-container .auth-wrapper .form-group {
+  margin-top: 14px;
+}
+#auth-container .auth-wrapper .form-group input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: 1.5px solid var(--marine-color);
+  border-radius: 8px;
+  outline: none;
+}
+#auth-container .auth-wrapper .form-group input[name=remember] {
+  width: auto;
+  height: auto;
+  border: none;
+  margin-right: 8px;
+}
+#auth-container .auth-wrapper button,
+#auth-container .auth-wrapper p {
+  margin-top: 14px;
+  width: 100%;
+}
+#auth-container .auth-wrapper p {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+#auth-container .auth-wrapper a,
+#auth-container .auth-wrapper button {
+  color: #000;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  padding: 16px 24px;
+  border-radius: 8px;
+  outline: var(--blue-color);
+  background-color: var(--white-05-color);
+}
+#auth-container .auth-wrapper a.sign-in__button,
+#auth-container .auth-wrapper button.sign-in__button {
+  background: var(--white-40-color);
+  color: var(--bg-primary);
+}
+#auth-container .auth-wrapper a.sign-in__button:hover,
+#auth-container .auth-wrapper button.sign-in__button:hover {
+  background: var(--orange-color);
+}
+#auth-container .auth-wrapper a.sign-up__button, #auth-container .auth-wrapper a.forgot-password__button,
+#auth-container .auth-wrapper button.sign-up__button,
+#auth-container .auth-wrapper button.forgot-password__button {
+  margin-top: 10px;
+  background: transparent;
+  padding: 8px 16px;
+  color: var(--orange-color);
+}
+#auth-container .auth-wrapper a.sign-up__button:hover, #auth-container .auth-wrapper a.forgot-password__button:hover,
+#auth-container .auth-wrapper button.sign-up__button:hover,
+#auth-container .auth-wrapper button.forgot-password__button:hover {
+  color: var(--white-40-color);
+}
+#auth-container .auth-wrapper a.social-login__button,
+#auth-container .auth-wrapper button.social-login__button {
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding: 0px 12px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#auth-container .auth-wrapper a.social-login__button:hover,
+#auth-container .auth-wrapper button.social-login__button:hover {
+  background: var(--orange-color);
+}
+#auth-container .auth-wrapper a.social-login__button img,
+#auth-container .auth-wrapper button.social-login__button img {
+  margin-right: 8px;
+}
+#auth-container .auth-loading {
+  width: 400px;
+  height: 240px;
+  padding: 48px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--box-shadow);
+  border-radius: 8px;
+  background: var(--bg-primary);
+}
+#auth-container .auth-loading img {
+  width: 40px;
+  height: 40px;
+}
+@media (max-width: 576px) {
+  #auth-container .auth-loading {
+    width: 100vw;
+    height: 100vh;
+    box-shadow: unset;
+    border-radius: unset;
+  }
+}/*# sourceMappingURL=auth.css.map */

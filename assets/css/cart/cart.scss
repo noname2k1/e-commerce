@@ -1,0 +1,140 @@
+#cart-container {
+    min-height: 500px;
+    height: 100vh;
+    position: relative;
+    $last-element-height: 86px;
+    $title-height: 50px;
+    h1 {
+        position: relative;
+
+        height: $title-height;
+        @media screen and (max-width: 767px) {
+            text-align: center;
+        }
+        margin: 0;
+        line-height: $title-height;
+        .previous-page__button {
+            position: absolute;
+            top: 0;
+            left: 10px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+    }
+    ul {
+        $mt: 40px;
+        margin-top: 40px;
+        list-style: none;
+        max-height: calc(100% - ($title-height + $mt) - $last-element-height);
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        li {
+            margin-bottom: 4px;
+            padding: 10px;
+            border-radius: 4px;
+            &:hover {
+                background-color: var(--bg-secondary);
+            }
+            .no-product {
+                color: var(--black-50-color);
+                text-align: center;
+                margin: 80px 0;
+            }
+            display: flex;
+            align-items: center;
+            input[type='checkbox'] {
+                margin-right: 32px;
+            }
+            img {
+                width: 120px;
+                height: 120px;
+                border-radius: 8px;
+                border: 1px solid var(--white-15-color);
+                margin-right: 32px;
+            }
+            .product-info {
+                .product-name {
+                    font-size: 25px;
+                    font-weight: 600;
+                }
+                .action {
+                    margin-top: 16px;
+                    display: flex;
+                    .product-price {
+                        font-size: 25px;
+                        font-weight: 600;
+                        margin-right: 28px;
+                    }
+                    .quantity {
+                        display: flex;
+                        align-items: center;
+                        .btn-quantity {
+                            width: 24px;
+                            height: 24px;
+                            border-radius: 50%;
+                            &.decrease {
+                                border: 1.5px solid var(--blue-color);
+                                background: #fff;
+                            }
+                            &.increase {
+                                background: var(--blue-color);
+                                color: #fff;
+                            }
+                        }
+                        .num {
+                            padding: 0 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .end-cart__element {
+        height: 86px;
+    }
+    .total {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        height: $last-element-height;
+        background-color: var(--bg-primary);
+        @media (max-width: 576px) {
+            box-shadow: var(--box-shadow);
+            justify-content: center;
+        }
+        .total-num {
+            margin-right: 28px;
+            font-size: 25px;
+            font-weight: 600;
+        }
+        .btn {
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: 600;
+            border: 1.5px solid var(--marine-color);
+            background: transparent;
+            &:hover {
+                background: var(--bg-secondary);
+                color: var(--color-primary);
+            }
+        }
+    }
+}

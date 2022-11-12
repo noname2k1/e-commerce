@@ -1,0 +1,15 @@
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+**/bower_components
+**/vendor
+**/tmp
+**/log
+**/cache
+**/sessions
+**/public/assets
+**/public/packs
+**/public/packs-test
+**/public/webpack
+.htaccess

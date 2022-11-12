@@ -1,0 +1,14 @@
+img {
+  width: auto;
+  height: 50px;
+}
+
+td {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+td.description__td {
+  max-width: 200px;
+  overflow: hidden;
+}/*# sourceMappingURL=index.css.map */
