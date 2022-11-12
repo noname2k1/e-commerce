@@ -248,6 +248,7 @@ nav.categories-nav .nav-item span {
     margin-bottom: 0;
     bottom: -1px;
     justify-content: space-evenly;
+    z-index: 1;
   }
   input[type=checkbox]#mobile-menu:checked ~ nav.categories-nav.mobile .nav-item {
     display: flex;
