@@ -1,4 +1,5 @@
 <?php
+session_start();
 //path: index.php
 if(isset($_POST['logout']) && $_POST['logout']) {
     session_destroy();

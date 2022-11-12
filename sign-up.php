@@ -1,4 +1,5 @@
 <?php
+session_start();
 echo $_SERVER['HTTP_HOST'];
 echo $_SERVER['REQUEST_URI'];
     if(isset($_POST['username']) && isset($_POST['password']) &&isset($_POST['cfpassword']) &&isset($_POST['email']) ) {

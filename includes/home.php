@@ -23,7 +23,7 @@ include_once 'model/product.php';
         </div>
         <div class="nav-item mint">
             <button>
-                <img src="./assets/img/main/categories/CPU-fill.svg" alt="" />
+                <img src="./assets/img/main/categories/cpu-fill.svg" alt="" />
             </button>
             <span class="category-title">CPU</span>
         </div>

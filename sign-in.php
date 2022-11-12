@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once 'model/user.php';
 include_once 'model/profile.php';
 if (isset($_POST['username']) && isset($_POST['password'])) {

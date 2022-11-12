@@ -1,4 +1,5 @@
 <?php
+session_start();
 //path: admin\index.php
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'mod') {
