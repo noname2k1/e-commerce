@@ -2,10 +2,10 @@
 //connect to PDO
 function connect_to_mysql_using_PDO()
 {
-    $db_localhost = "localhost";
+    $db_localhost = "ql-banhang.cajq2vqpa1ir.ap-northeast-3.rds.amazonaws.com";
     $db_name = "ecommerce";
-    $db_user = "root";
-    $db_pass = "";
+    $db_user = "admin";
+    $db_pass = "Nam123456";
 
     $pdo_conn = new PDO("mysql:host={$db_localhost};dbname={$db_name}", $db_user, $db_pass);
     $pdo_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
