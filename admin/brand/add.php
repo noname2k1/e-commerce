@@ -1,6 +1,6 @@
 <?php
 include_once '../../model/brand.php';
-
+session_start();
 if (isset($_POST['name']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'mod')) {
     $name = $_POST['name'];
 

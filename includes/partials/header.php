@@ -1,6 +1,5 @@
 <?php
 //path: includes\partials\header.php
-
 ?>
 
 <!DOCTYPE html>
@@ -43,21 +42,26 @@
                     <img src="./assets/img/header/search-icon.svg" alt="search-icon" />
                 </div>
                 <!-- check user logged in -->
-                <?php
-                if (isset($_SESSION['name'])) {
-                    echo    "<span class='user'><img src='./assets/img/user.svg' alt='thuong-mai-dien-tu'>Hi,{$_SESSION['name']}
-                                <div class='user-menu'>
+<?php
+$curent_page_url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+if (isset($_SESSION['name'])) {
+ echo "<span class='user'><img src='./assets/img/user.svg' alt='thuong-mai-dien-tu'>Hi,{$_SESSION['name']}
+                                 <div class='user-menu'>
                                     <ul>
                                         <li class='user-menu-item'>Account profile</li>
-                                        <form method='POST' action='index.php'><input name='logout' type='submit' class='user-menu-item' value='logout'/></form>
+                                        <li class='user-menu-item'>Change password</li>
+                                        <form method='POST' action='index.php'><input name='logout' type='submit' class='user-menu-item' value='LOGOUT'/></form>
                                     </ul>
                                 </div>
                             </span>";
-                } else echo  "<a class='sign-in' href='sign-in.php'>Sign in</a>";    
-                ?>
+} else {
+ echo "<a class='sign-in' href='sign-in.php?prevpage=" . $curent_page_url . "'>Sign in</a>";
+}
+
+?>
                 <!-- cart -->
                 <div class="header-cart">
-                    <a href="cart.html">
+                    <a href="?rdt=cart">
                         <img src="./assets/img/header/shopping-cart-2-line.svg" alt="cart-button" />
                     </a>
                 </div>

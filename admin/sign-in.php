@@ -5,26 +5,26 @@ session_start();
 // $dotenv->load();
 require_once '../model/user.php';
 if (isset($_POST['username']) && isset($_POST['password'])) {
-    //check form
-    $usr = isset($_POST['username']) ? (string) $_POST['username'] : false;
-    $pwd = isset($_POST['password']) ? (string) $_POST['password'] : false;
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    // query
-    $user = user_login($usr, $pwd);
-    if ($user && $user['username'] == $username) {
-        echo "<script>document.addEventListener('DOMContentLoaded',function(){
+ //check form
+ $usr      = isset($_POST['username']) ? (string)$_POST['username'] : false;
+ $pwd      = isset($_POST['password']) ? (string)$_POST['password'] : false;
+ $username = $_POST['username'];
+ $password = $_POST['password'];
+ // query
+ $user = get_user_by_username_and_password($usr, $pwd);
+ if ($user && $user['username'] == $username) {
+  echo "<script>document.addEventListener('DOMContentLoaded',function(){
             toastr.success('login successfuly, redirect to admin dashboard!','LOGIN SYSTEM',{timeOut:3000})
         })</script>";
-        $_SESSION['id'] =  $user['id'];
-        $_SESSION['role'] = $user['role'];
-        // header('Location: ');
-        header('Refresh: 1; URL=index.php');
-    } else {
-        echo "<script>document.addEventListener('DOMContentLoaded',function(){
+  $_SESSION['id']   = $user['id'];
+  $_SESSION['role'] = $user['role'];
+  // header('Location: ');
+  header('Refresh: 1; URL=index.php');
+ } else {
+  echo "<script>document.addEventListener('DOMContentLoaded',function(){
             toastr.error('login failed, please try again!','LOGIN SYSTEM',{timeOut:3000})
         })</script>";
-    }
+ }
 }
 ?>
 <!DOCTYPE html>

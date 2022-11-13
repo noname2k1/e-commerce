@@ -200,6 +200,12 @@
 .product-detail-wrapper .product-wrapper .detail .choice {
   margin-bottom: 20px;
 }
+@media screen and (max-width: 740px) {
+  .product-detail-wrapper .product-wrapper .detail span.total,
+.product-detail-wrapper .product-wrapper .detail .total-before-text {
+    display: none;
+  }
+}
 .product-detail-wrapper .product-wrapper .detail .shop {
   display: flex;
   align-items: center;

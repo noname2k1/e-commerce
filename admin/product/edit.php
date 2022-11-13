@@ -1,6 +1,6 @@
 <?php
 include_once '../../model/product.php';
-
+session_start();
 if (isset($_POST['id']) && isset($_POST['name']) &&
     isset($_POST['price']) && isset($_POST['size']) &&
     isset($_POST['color']) && isset($_POST['img']) &&

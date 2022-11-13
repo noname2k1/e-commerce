@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once '../../model/user.php';
 
 if (isset($_POST['id']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']) && isset($_POST['role']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'mod')) {

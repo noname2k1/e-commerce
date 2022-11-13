@@ -1,6 +1,6 @@
 <?php
 include_once '../../model/utils.php';
-
+session_start();
 if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['img']) && isset($_POST['phone']) && isset($_POST['userid']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'mod')) {
     $id = $_POST['id'];
     $name = $_POST['name'];

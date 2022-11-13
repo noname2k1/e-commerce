@@ -1,36 +1,39 @@
 const validateForm = (callback) => {
-    var usernameRegex = /^[A-Za-z][A-Za-z0-9_]{4,30}$/;
-    // var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
-    var passwordRegex = /^(?=.*\d).{6,}$/;
-    var emailRegex =
+    const username = /^[A-Za-z][A-Za-z0-9_]{5,19}$/;
+    // const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
+    const password = /^(?=.*\d).{6,}$/;
+    const emailRegex =
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    var phoneRegex = /^[0-9]{10}$/;
-    var nameRegex =
+    const phone = /^[0-9]{10}$/;
+    const name =
         /^[^\s]+([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+[^\s])$/i;
-    var addressRegex =
+    const address =
         /^[^\s]+([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+[^\s])$/i;
-    var cityRegex =
+    const city =
         /^[^\s]+([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+[^\s])$/i;
-    var stateRegex =
+    const state =
         /^[^\s]+([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+[^\s])$/i;
-    var zipRegex = /^[0-9]{6}$/;
-    var countryRegex =
+    const zip = /^[0-9]{6}$/;
+    const country =
         /^[^\s]+([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+[^\s])$/i;
-    var cardRegex = /^[0-9]{16}$/;
-    var cvvRegex = /^[0-9]{3}$/;
-    var expRegex = /^[0-9]{2}$/;
-    var nameOnCardRegex =
+    const card = /^[0-9]{16}$/;
+    const cvv = /^[0-9]{3}$/;
+    const exp = /^[0-9]{2}$/;
+    const nameOnCard =
         /^[^\s]+([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+[^\s])$/i;
-    var decriptionRegex = /^[A-Za-z][A-Za-z0-9_]{5,255}$/;
-    var priceRegex = /^[0-9]{1,}$/;
-    var quantityRegex = /^[0-9]{1,}$/;
-    var sizeRegex =
+    const description = /^[A-Za-z][A-Za-z0-9_]{5,255}$/;
+    const price = /^[0-9]{1,}$/;
+    const quantity = /^[0-9]{1,}$/;
+    const size =
         /^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ,\s]+)$/i;
-    var colorRegex =
+    const color =
         /^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ,\s]+)$/i;
     $(document).on('submit', 'form#crud', function (e) {
         const inputTypePassword = document.querySelector(
             'input[type="password"]'
+        );
+        const inputcfPassword = document.querySelector(
+            'input[name="cfpassword"]'
         );
         const inputTypeEmail = document.querySelector('input[type="email"]');
         const inputTypePhone = document.querySelector('input[type="tel"]');
@@ -66,18 +69,18 @@ const validateForm = (callback) => {
         //username
         if (
             inputTypeUsername &&
-            !usernameRegex.test($('input[name="username"]').val())
+            !username.test($('input[name="username"]').val())
         ) {
             $('input[name="username"]').addClass('invalid');
             return displayToast(
                 'error',
-                'username must be 3-20 characters, start with a letter, and contain only letters, numbers, and underscores'
+                'username must be 6-20 characters, start with a letter, and contain only letters, numbers, and underscores'
             );
         }
         //password
         if (
             inputTypePassword &&
-            !passwordRegex.test($('input[name="password"]').val())
+            !password.test($('input[name="password"]').val())
         ) {
             $('input[name="password"]').addClass('invalid');
             return displayToast(
@@ -86,7 +89,8 @@ const validateForm = (callback) => {
             );
         }
         if (
-            $('input[name="cfpassword"]') &&
+            inputcfPassword &&
+            inputTypePassword &&
             $('input[name="password"]').val() !==
                 $('input[name="cfpassword"]').val()
         ) {
@@ -105,15 +109,12 @@ const validateForm = (callback) => {
             return displayToast('error', 'email is not valid');
         }
         //phone
-        if (
-            inputTypePhone &&
-            !phoneRegex.test($('input[name="phone"]').val())
-        ) {
+        if (inputTypePhone && !phone.test($('input[name="phone"]').val())) {
             $('input[name="phone"]').addClass('invalid');
             return displayToast('error', 'phone is not valid');
         }
         //name
-        if (inputTypeName && !nameRegex.test($('input[name="name"]').val())) {
+        if (inputTypeName && !name.test($('input[name="name"]').val())) {
             $('input[name="name"]').addClass('invalid');
             return displayToast(
                 'error',
@@ -123,7 +124,7 @@ const validateForm = (callback) => {
         //address
         if (
             inputTypeAddress &&
-            !addressRegex.test($('input[name="address"]').val())
+            !address.test($('input[name="address"]').val())
         ) {
             $('input[name="address"]').addClass('invalid');
             return displayToast(
@@ -132,7 +133,7 @@ const validateForm = (callback) => {
             );
         }
         //city
-        if (inputTypeCity && !cityRegex.test($('input[name="city"]').val())) {
+        if (inputTypeCity && !city.test($('input[name="city"]').val())) {
             $('input[name="city"]').addClass('invalid');
             return displayToast(
                 'error',
@@ -140,10 +141,7 @@ const validateForm = (callback) => {
             );
         }
         //state
-        if (
-            inputTypeState &&
-            !stateRegex.test($('input[name="state"]').val())
-        ) {
+        if (inputTypeState && !state.test($('input[name="state"]').val())) {
             $('input[name="state"]').addClass('invalid');
             return displayToast(
                 'error',
@@ -151,14 +149,14 @@ const validateForm = (callback) => {
             );
         }
         //zip
-        if (inputTypeZip && !zipRegex.test($('input[name="zip"]').val())) {
+        if (inputTypeZip && !zip.test($('input[name="zip"]').val())) {
             $('input[name="zip"]').addClass('invalid');
             return displayToast('error', 'zip is not valid');
         }
         //country
         if (
             inputTypeCountry &&
-            !countryRegex.test($('input[name="country"]').val())
+            !country.test($('input[name="country"]').val())
         ) {
             $('input[name="country"]').addClass('invalid');
             return displayToast(
@@ -167,24 +165,24 @@ const validateForm = (callback) => {
             );
         }
         //card
-        if (inputTypeCard && !cardRegex.test($('input[name="card"]').val())) {
+        if (inputTypeCard && !card.test($('input[name="card"]').val())) {
             $('input[name="card"]').addClass('invalid');
             return displayToast('error', 'card is not valid');
         }
         //cvv
-        if (inputTypeCvv && !cvvRegex.test($('input[name="cvv"]').val())) {
+        if (inputTypeCvv && !cvv.test($('input[name="cvv"]').val())) {
             $('input[name="cvv"]').addClass('invalid');
             return displayToast('error', 'cvv is not valid');
         }
         //exp
-        if (inputTypeExp && !expRegex.test($('input[name="exp"]').val())) {
+        if (inputTypeExp && !exp.test($('input[name="exp"]').val())) {
             $('input[name="exp"]').addClass('invalid');
             return displayToast('error', 'exp is not valid');
         }
         //nameOnCard
         if (
             inputTypeNameOnCard &&
-            !nameOnCardRegex.test($('input[name="nameOnCard"]').val())
+            !nameOnCard.test($('input[name="nameOnCard"]').val())
         ) {
             $('input[name="nameOnCard"]').addClass('invalid');
             return displayToast(
@@ -195,7 +193,7 @@ const validateForm = (callback) => {
         //description
         if (
             inputTypeDescription &&
-            !decriptionRegex.test($('input[name="decription"]').val())
+            !description.test($('input[name="decription"]').val())
         ) {
             $('input[name="decription"]').addClass('invalid');
             return displayToast(
@@ -204,31 +202,25 @@ const validateForm = (callback) => {
             );
         }
         //price
-        if (
-            inputTypePrice &&
-            !priceRegex.test($('input[name="price"]').val())
-        ) {
+        if (inputTypePrice && !price.test($('input[name="price"]').val())) {
             $('input[name="price"]').addClass('invalid');
             return displayToast('error', 'price is not valid');
         }
         //quantity
         if (
             inputTypeQuantity &&
-            !quantityRegex.test($('input[name="quantity"]').val())
+            !quantity.test($('input[name="quantity"]').val())
         ) {
             $('input[name="quantity"]').addClass('invalid');
             return displayToast('error', 'quantity is not valid');
         }
         //size
-        if (inputTypeSize && !sizeRegex.test($('input[name="size"]').val())) {
+        if (inputTypeSize && !size.test($('input[name="size"]').val())) {
             $('input[name="size"]').addClass('invalid');
             return displayToast('error', 'size must be 1-255 characters');
         }
         //color
-        if (
-            inputTypeColor &&
-            !colorRegex.test($('input[name="color"]').val())
-        ) {
+        if (inputTypeColor && !color.test($('input[name="color"]').val())) {
             $('input[name="color"]').addClass('invalid');
             return displayToast(
                 'error',
@@ -238,4 +230,53 @@ const validateForm = (callback) => {
 
         callback();
     });
+};
+
+const validateInput = (input) => {
+    if (!input) return;
+    const inputName = input.attr('name');
+    const inputVal = input.val();
+    switch (inputName) {
+        case 'username':
+            if (!username.test(inputVal)) {
+                input.addClass('invalid');
+                return 'username must be 3-20 characters, start with a letter or number, and contain only letters, numbers, and underscores or spaces, no spaces at the beginning or end';
+            } else {
+                input.removeClass('invalid');
+            }
+            break;
+        case 'password':
+            if (!password.test(inputVal)) {
+                input.addClass('invalid');
+                return 'password must be 6 characters, contain at least one number';
+            } else {
+                input.removeClass('invalid');
+            }
+            break;
+        case 'email':
+            if (!email.test(inputVal)) {
+                input.addClass('invalid');
+                return 'email is not valid';
+            } else {
+                input.removeClass('invalid');
+            }
+            break;
+        case 'name':
+            if (!name.test(inputVal)) {
+                input.addClass('invalid');
+                return 'name must be 3-20 characters, start with a letter or number, and contain only letters, numbers, and underscores or spaces, no spaces at the beginning or end';
+            } else {
+                input.removeClass('invalid');
+            }
+            break;
+        case 'cfpassword':
+            if (inputVal !== $('input[name="password"]').val()) {
+                input.addClass('invalid');
+                return 'passwords do not match';
+            } else {
+                input.removeClass('invalid');
+            }
+        default:
+            break;
+    }
 };

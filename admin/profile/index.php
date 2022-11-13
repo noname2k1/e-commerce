@@ -1,6 +1,5 @@
 <?php
 include_once '../model/utils.php';
-
 ?>
 <style>
 .table>tbody {

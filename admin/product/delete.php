@@ -1,6 +1,6 @@
 <?php
 include_once '../../model/product.php';
-
+session_start();
 if (isset($_POST['id']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'mod')) {
     $id=$_POST['id'];
 

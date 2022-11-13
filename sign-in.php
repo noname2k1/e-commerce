@@ -3,30 +3,34 @@ session_start();
 include_once 'model/user.php';
 include_once 'model/profile.php';
 if (isset($_POST['username']) && isset($_POST['password'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $user = user_login($username, $password);
-    isset($_POST['remember']) ? $remember = true : $remember = false;
-    if ($user) {
-        $_SESSION['user'] = $user;
-        $profile = get_profile_by_userid($user['id']);
-        $_SESSION['profileid'] = $profile['id'];
-        $_SESSION['id'] =  $user['id'];
-        $_SESSION['role'] = $user['role'];
-        $_SESSION['name'] = $profile['name'];
-        if ($remember) {
-            setcookie('username', $username, time() + 3600 * 24 * 30);
-            setcookie('password', $password, time() + 3600 * 24 * 30);
-        }
-        echo "<script>document.addEventListener('DOMContentLoaded',function(){
-            toastr.success('login successfuly, redirect to homepage','LOGIN SYSTEM',{timeOut:3000})
+ $username                             = $_POST['username'];
+ $password                             = $_POST['password'];
+ $user                                 = get_user_by_username_and_password($username, $password);
+ $prev_page                            = isset($_GET['prevpage']) ? $_GET['prevpage'] : 'index.php';
+ isset($_POST['remember']) ? $remember = true : $remember = false;
+ if ($user) {
+  save_user_to_session($user);
+  if ($remember) {
+   setcookie('username', $username, time() + 3600 * 24 * 30);
+   setcookie('password', $password, time() + 3600 * 24 * 30);
+  }
+  echo "<script>document.addEventListener('DOMContentLoaded',function(){
+            toastr.success('login successfuly','LOGIN SYSTEM',{timeOut:3000})
         })</script>";
-        header('Refresh: 1; URL=index.php');
-    } else {
-        echo "<script>document.addEventListener('DOMContentLoaded',function(){
+  if ($prev_page !== 'index.php') {
+   $query_str = explode('?', $_SERVER['HTTP_REFERER'], 2)[1];
+   $old_url   = explode('=', $_SERVER['HTTP_REFERER'], 2)[1];
+   echo "<script>document.addEventListener('DOMContentLoaded',function(){
+               document.location.href = 'http://" . $old_url . "';
+            })</script>";
+  } else {
+   header('Refresh: 1; URL=index.php');
+  }
+ } else {
+  echo "<script>document.addEventListener('DOMContentLoaded',function(){
             toastr.error('login failed, please try again!','LOGIN SYSTEM',{timeOut:2000})
         })</script>";
-    }
+ }
 }
 ?>
 <!DOCTYPE html>
@@ -36,7 +40,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>auth - page</title>
+    <title>SIGN IN</title>
     <link rel="icon" href="./assets/img/Chomerce - logo.svg" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
         integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
@@ -55,10 +59,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 </a></h1>
             <form method="POST">
                 <div class="form-group">
-                    <input type="text" name="username" id="username" placeholder="username or email..." />
+                    <input type="text" name="username" id="username" placeholder="username or email..." required />
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" id="password" placeholder="password" autocomplete="0" />
+                    <input type="password" name="password" id="password" placeholder="password" autocomplete="0"
+                        required />
                 </div>
                 <div class="form-group">
                     <input type="checkbox" name="remember" id="remember" placeholder="remember" />
@@ -69,7 +74,17 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             <a href="#" class="forgot-password__button">
                 Fogot password
             </a>
-            <a href="sign-up.php" class="sign-up__button">Sign up</a>
+            <a href="sign-up.html?<?php
+$prev_page = isset($_GET['prevpage']) ? $_GET['prevpage'] : 'index.php';
+if ($prev_page !== 'index.php') {
+ if (strpos($_SERVER['HTTP_REFERER'], '?') !== false) {
+  $query_str = explode('?', $_SERVER['HTTP_REFERER'], 2)[1];
+  echo $query_str;
+ } else {
+  echo $prev_page;
+ }
+}
+?>" class="sign-up__button">Sign up</a>
             <p>or</p>
             <a href="#" class="social-login__button">
                 <img src="assets/img/google-icon.svg" alt="thuong-mai-dien-tu" />Continue with Google

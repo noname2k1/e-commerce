@@ -5,10 +5,8 @@ const ajaxCallPOST = (url, data, callback) => {
         data,
         dataType: 'json',
         success: function (response) {
+            console.log('ajax success');
             callback(response);
-            if (response.error) {
-                console.log(response.error);
-            }
         },
     });
 };
@@ -22,10 +20,8 @@ const ajaxCallUpload = (url, data, callback) => {
         contentType: false,
         processData: false,
         success: function (response) {
+            console.log('ajax success');
             callback(response);
-            if (response.error) {
-                console.log(response.error);
-            }
         },
     });
 };
@@ -37,10 +33,8 @@ const ajaxCallGET = (url, data, callback) => {
         data,
         dataType: 'json',
         success: function (response) {
+            console.log('ajax success');
             callback(response);
-            if (response.error) {
-                console.log(response.error);
-            }
         },
     });
 };
