@@ -28,14 +28,14 @@ include_once '../model/user.php';
             <select class="form-select" id="" name="role">
                 <option selected value="user">Choose role...</option>
                 <?php
-                    if(isset($_SESSION['role'])){
-                        if($_SESSION['role'] == 'admin'){
-                            echo '<option value="admin">admin</option>';
-                        }
-                    }
-                    echo' <option value="user">user</option>';
-                    echo' <option value="mod">mod</option>';
-                ?>
+if (isset($_SESSION['role'])) {
+ if ($_SESSION['role'] == 'admin') {
+  echo '<option value="admin">admin</option>';
+ }
+}
+echo ' <option value="user">user</option>';
+echo ' <option value="mod">mod</option>';
+?>
             </select>
         </div>
     </div>
@@ -68,35 +68,35 @@ include_once '../model/user.php';
         <?php
 function fetch_all_user()
 {
-    if(isset($_SESSION['role'])){
-        if($_SESSION['role'] == 'admin'){
-            $query = 'select * from user';
-        }else{
-            $query = 'select * from user where role = "mod" or role = "user"';
-        }
+ if (isset($_SESSION['role'])) {
+  if ($_SESSION['role'] == 'admin') {
+   $query = 'select * from user';
+  } else {
+   $query = 'select * from user where role = "mod" or role = "user"';
+  }
+ }
+ $user_data = pdo_fetch_all($query); //result is a array
+ $me        = false;
+ if ($user_data) {
+  foreach ($user_data as $row) {
+   if (isset($_SESSION['id'])) {
+    if ($_SESSION['id'] == $row['id']) {
+     $me = true;
+    } else {
+     $me = false;
     }
-    $user_data = pdo_fetch_all($query); //result is a array
-    $me = false;
-    if ($user_data) {
-        foreach ($user_data as $row) {
-            if(isset($_SESSION['id'])){
-                if($_SESSION['id'] == $row['id']){
-                    $me = true;
-                }else {
-                    $me = false;
-                }
-            }
-            echo '<tr>';
-            echo "<th scope='row'>{$row['id']}</th>";
-            echo "<td>{$row['username']}";
-            if($me) {
-                echo '<span class="badge bg-danger ms-1">me</span>';
-            }
-            echo"</td>";
-            echo "<td>{$row['password']}</td>";
-            echo "<td>{$row['email']}</td>";
-            echo "<td>{$row['role']}</td>";
-            echo "<td><button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger delete__btn' data-bs-toggle='modal' data-bs-target='#{$row['username']}-{$row['id']}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
+   }
+   echo '<tr>';
+   echo "<th scope='row'>{$row['id']}</th>";
+   echo "<td>{$row['username']}";
+   if ($me) {
+    echo '<span class="badge bg-danger ms-1">me</span>';
+   }
+   echo "</td>";
+   echo "<td>{$row['password']}</td>";
+   echo "<td>{$row['email']}</td>";
+   echo "<td>{$row['role']}</td>";
+   echo "<td><button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger delete__btn' data-bs-toggle='modal' data-bs-target='#{$row['username']}-{$row['id']}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
             <div class='modal fade' id='{$row['username']}-{$row['id']}' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
               <div class='modal-dialog'>
                 <div class='modal-content'>
@@ -114,13 +114,13 @@ function fetch_all_user()
                 </div>
               </div>
             </div></td>";
-            echo '</tr>';
-        }
-    } else {
-      echo "<tr>
+   echo '</tr>';
+  }
+ } else {
+  echo "<tr>
       <td colspan='6' align='center'><b>no user</b></td>
       </tr>";
-    }
+ }
 }
 fetch_all_user();
 ?>
@@ -133,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const title = $('form > h2');
     const button = $('button[type="submit"].submit');
     const cancelBtn = $('input[type="reset"].cancel__btn');
+    const loading = $('.loading');
     //cancel button handle click
     cancelBtn.click(function() {
         $(this).addClass('d-none');
@@ -209,6 +210,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         </thead>`
 
     const callAjax = (url, data, action) => {
+        if (loading.hasClass('d-none')) {
+            loading.removeClass('d-none');
+        }
         ajaxCallPOST(url, data, function(res) {
             if (Array.isArray(res)) {
                 if (res.length === 0) {
@@ -232,6 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cancelBtn) {
                 cancelBtn.click();
 
+            }
+            if (!loading.hasClass('d-none')) {
+                loading.addClass('d-none');
             }
         });
     }

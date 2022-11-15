@@ -6,10 +6,15 @@ main {
     .products {
         .row {
             .product-item {
+                display: inline-flex;
+                flex-direction: column;
+                height: 100%;
+                width: 100%;
                 text-decoration: none;
                 margin-bottom: 40px;
                 .product-image {
                     margin: 10px 0;
+                    margin-bottom: auto;
                     img {
                         width: 100%;
                     }

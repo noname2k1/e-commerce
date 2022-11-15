@@ -38,13 +38,13 @@ include_once '../model/category.php';
     </thead>
     <tbody>
         <?php
-    $categories = get_all_category(); //result is a array
-    if ($categories) {
-        foreach ($categories as $category) {
-            echo '<tr>';
-            echo "<th scope='row'>{$category['id']}</th>";
-            echo "<td>{$category['name']}</td>";
-            echo "<td><button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-{$category['id']}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
+$categories = get_all_category(); //result is a array
+if ($categories) {
+ foreach ($categories as $category) {
+  echo '<tr>';
+  echo "<th scope='row'>{$category['id']}</th>";
+  echo "<td>{$category['name']}</td>";
+  echo "<td><button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-{$category['id']}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
             <div class='modal fade' id='id-{$category['id']}' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
               <div class='modal-dialog'>
                 <div class='modal-content'>
@@ -62,13 +62,13 @@ include_once '../model/category.php';
                 </div>
               </div>
             </div></td>";
-            echo '</tr>';
-        }
-    } else {
-        echo "<tr>
+  echo '</tr>';
+ }
+} else {
+ echo "<tr>
         <td colspan='3' align='center'><b>no category</b></td>
         </tr>";
-    }
+}
 ?>
 
     </tbody>
@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const title = $('form > h2');
     const button = $('button[type="submit"].submit');
     const cancelBtn = $('input[type="reset"].cancel__btn');
+    const loading = $('.loading');
     //cancel button handle click
     cancelBtn.click(function() {
         $(this).addClass('d-none');
@@ -135,8 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             </tr>
                         </thead>`
 
-    // delete 
+    // delete
     $(document).on('click', '.btn.delete__btn', function() {
+        if (loading.hasClass('d-none')) {
+            loading.removeClass('d-none');
+        }
         let url = 'category/delete.php';
         const deleteForm = {
             id: $(this).data('id'),
@@ -162,11 +166,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayToast('error', res)
             }
             cancelBtn.click();
+            if (!loading.hasClass('d-none')) {
+                loading.addClass('d-none');
+            }
         });
     })
     validateForm(
         function() {
-
+            if (loading.hasClass('d-none')) {
+                loading.removeClass('d-none');
+            }
             //add
             if (button.hasClass('add__btn')) {
                 console.log('add-form-send')
@@ -191,6 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         // console.log(res);
                         displayToast('error', res)
+                    }
+                    if (!loading.hasClass('d-none')) {
+                        loading.addClass('d-none');
                     }
                 });
             }
@@ -220,6 +232,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         displayToast('error', res)
                     }
                     cancelBtn.click();
+                    if (!loading.hasClass('d-none')) {
+                        loading.addClass('d-none');
+                    }
                 });
             }
 

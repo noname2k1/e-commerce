@@ -59,39 +59,41 @@ include_once '../model/utils.php';
     </thead>
     <tbody>
         <?php
-    if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-        $query = 'select * from profile';
-    } else {
-        $query = "select * from profile inner join user on profile.userid = user.id where user.role = 'mod' or user.role = 'user'";
-    }
-    $data= pdo_fetch_all($query); //result is a array
-    $me = false;
-    if ($data) {
-        foreach ($data as $row) {
-            if ($row['userid'] == $_SESSION['id']) {
-                $me = true;
-            } else
-                $me = false;
-            echo '<tr>';
-            echo "<th scope='row'>{$row['id']}</th>";
-            echo "<td>{$row['name']}";
-            if($me) {
-                echo "<span class='badge bg-danger ms-1'>me</span>";
-            }
-            echo "</td>";
-            echo "<td><img src='{$row['img']}' alt='thuong-mai-dien-tu'></td>";
-            echo "<td>{$row['createdAt']}</td>";
-            echo "<td>{$row['updatedAt']}</td>";
-            echo "<td>{$row['phone']}</td>";
-            echo "<td>{$row['userid']}</td>";
-            echo "<td><button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button></td>";
-            echo '</tr>';
-        }
-    } else {
-      echo "<tr>
+if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+ $query = 'select * from profile';
+} else {
+ $query = "select * from profile inner join user on profile.userid = user.id where user.role = 'mod' or user.role = 'user'";
+}
+$data = pdo_fetch_all($query); //result is a array
+$me   = false;
+if ($data) {
+ foreach ($data as $row) {
+  if ($row['userid'] == $_SESSION['id']) {
+   $me = true;
+  } else {
+   $me = false;
+  }
+
+  echo '<tr>';
+  echo "<th scope='row'>{$row['id']}</th>";
+  echo "<td>{$row['name']}";
+  if ($me) {
+   echo "<span class='badge bg-danger ms-1'>me</span>";
+  }
+  echo "</td>";
+  echo "<td><img src='{$row['img']}' alt='thuong-mai-dien-tu'></td>";
+  echo "<td>{$row['createdAt']}</td>";
+  echo "<td>{$row['updatedAt']}</td>";
+  echo "<td>{$row['phone']}</td>";
+  echo "<td>{$row['userid']}</td>";
+  echo "<td><button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button></td>";
+  echo '</tr>';
+ }
+} else {
+ echo "<tr>
       <td colspan='3' align='center'><b>no profile</b></td>
       </tr>";
-    }
+}
 ?>
 
     </tbody>
@@ -103,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const button = $('button[type="submit"].submit');
     const cancelBtn = $('input[type="reset"].cancel__btn');
     const form = $('form#crud');
+    const loading = $('.loading');
     //cancel button handle click
     cancelBtn.click(function() {
         title.text('edit profile')
@@ -190,10 +193,14 @@ document.addEventListener('DOMContentLoaded', () => {
         function() {
             //edit
             if (button.hasClass('edit__btn')) {
+                if (loading.hasClass('d-none')) {
+                    loading.removeClass('d-none');
+                }
                 console.log('edit-form-send')
                 var editForm = $('form#crud').serialize();
                 let url = 'profile/edit.php';
                 ajaxCallPOST(url, editForm, (res) => {
+                    cancelBtn.click();
                     if (Array.isArray(res)) {
                         if (res.length === 0) {
                             return $('tbody').html(`<tr>
@@ -212,8 +219,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         // console.log(res);
                         displayToast('error', res)
                     }
-                    cancelBtn.click();
+                    if (!loading.hasClass('d-none')) {
+                        loading.addClass('d-none');
+                    }
                 });
+                cancelBtn.click();
             }
         }
     )

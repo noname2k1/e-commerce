@@ -38,13 +38,13 @@ include_once '../model/brand.php';
     </thead>
     <tbody>
         <?php
-    $brands = get_all_brand(); //result is a array
-    if ($brands) {
-        foreach ($brands as $brand) {
-            echo '<tr>';
-            echo "<th scope='row'>{$brand['id']}</th>";
-            echo "<td>{$brand['name']}</td>";
-            echo "<td><button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-{$brand['id']}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
+$brands = get_all_brand(); //result is a array
+if ($brands) {
+ foreach ($brands as $brand) {
+  echo '<tr>';
+  echo "<th scope='row'>{$brand['id']}</th>";
+  echo "<td>{$brand['name']}</td>";
+  echo "<td><button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-{$brand['id']}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
             <div class='modal fade' id='id-{$brand['id']}' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
               <div class='modal-dialog'>
                 <div class='modal-content'>
@@ -62,13 +62,13 @@ include_once '../model/brand.php';
                 </div>
               </div>
             </div></td>";
-            echo '</tr>';
-        }
-    } else {
-        echo "<tr>
+  echo '</tr>';
+ }
+} else {
+ echo "<tr>
         <td colspan='3' align='center'><b>no brand</b></td>
         </tr>";
-    }
+}
 ?>
 
     </tbody>
@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const title = $('form > h2');
     const button = $('button[type="submit"].submit');
     const cancelBtn = $('input[type="reset"].cancel__btn');
+    const loading = $('.loading');
     //cancel button handle click
     cancelBtn.click(function() {
         $(this).addClass('d-none');
@@ -134,8 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             </tr>
                         </thead>`
 
-    // delete 
+    // delete
     $(document).on('click', '.btn.delete__btn', function() {
+        if (loading.hasClass('d-none')) {
+            loading.removeClass('d-none');
+        }
         let url = 'brand/delete.php';
         const deleteForm = {
             id: $(this).data('id'),
@@ -161,10 +165,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayToast('error', res)
             }
             cancelBtn.click();
+            if (!loading.hasClass('d-none')) {
+                loading.addClass('d-none');
+            }
         });
     })
     validateForm(
         function() {
+            if (loading.hasClass('d-none')) {
+                loading.removeClass('d-none');
+            }
             //add
             if (button.hasClass('add__btn')) {
                 console.log('add-form-send')
@@ -189,6 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         // console.log(res);
                         displayToast('error', res)
+                    }
+                    if (!loading.hasClass('d-none')) {
+                        loading.addClass('d-none');
                     }
                 });
             }
@@ -218,6 +231,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         displayToast('error', res)
                     }
                     cancelBtn.click();
+                    if (!loading.hasClass('d-none')) {
+                        loading.addClass('d-none');
+                    }
                 });
             }
         }

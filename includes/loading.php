@@ -12,6 +12,7 @@
     border-radius: 8px;
     background: var(--bg-primary);
     margin: auto;
+    z-index: 999;
 }
 
 .loading img {

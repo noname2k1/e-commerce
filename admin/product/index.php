@@ -67,27 +67,27 @@ include_once '../model/category.php';
         <div class="col">
             <select class="form-select" id="" name="category_id" required>
                 <option selected value="NULL">Choose category...</option>
-                <?php 
-                $categories= get_all_category(); //result is a array
-                if ($categories) {
-                    foreach ($categories as $category) {
-                        echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
-                    }
-                }
-                ?>
+                <?php
+$categories = get_all_category(); //result is a array
+if ($categories) {
+ foreach ($categories as $category) {
+  echo '<option value="' . $category['id'] . '">' . $category['name'] . '</option>';
+ }
+}
+?>
             </select>
         </div>
         <div class="col">
             <select class="form-select" id="" name="brand_id" required>
                 <option selected value="NULL">Choose brand...</option>
-                <?php 
-                $brands= get_all_brand(); //result is a array
-                if ($brands) {
-                    foreach ($brands as $brand) {
-                        echo '<option value="'.$brand['id'].'">'.$brand['name'].'</option>';
-                    }
-                }
-                ?>
+                <?php
+$brands = get_all_brand(); //result is a array
+if ($brands) {
+ foreach ($brands as $brand) {
+  echo '<option value="' . $brand['id'] . '">' . $brand['name'] . '</option>';
+ }
+}
+?>
             </select>
         </div>
     </div>
@@ -124,22 +124,22 @@ include_once '../model/category.php';
     </thead>
     <tbody>
         <?php
-    $products= get_all_product(); //result is a array
-    if ($products) {
-        foreach ($products as $product) {
-            echo '<tr>';
-            echo "<th scope='row'>{$product['id']}</th>";
-            echo "<td>{$product['name']}</td>";
-            echo "<td>{$product['price']}</td>";
-            echo "<td>{$product['size']}</td>";
-            echo "<td>{$product['color']}</td>";
-            echo "<td><img src='{$product['img']}' alt='thuong-mai-dien-tu'></td>";
-            echo "<td>{$product['quantity']}</td>";
-            echo "<td class='description__td'>{$product['description_and_specs']}</td>";
-            echo "<td>{$product['discount_percent']}</td>";
-            echo "<td>{$product['category_id']}</td>";
-            echo "<td>{$product['brand_id']}</td>";
-            echo "<td> <button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-{$product['id']}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
+$products = get_all_product(); //result is a array
+if ($products) {
+ foreach ($products as $product) {
+  echo '<tr>';
+  echo "<th scope='row'>{$product['id']}</th>";
+  echo "<td class='name'>{$product['name']}</td>";
+  echo "<td>{$product['price']}</td>";
+  echo "<td>{$product['size']}</td>";
+  echo "<td>{$product['color']}</td>";
+  echo "<td><img src='{$product['img']}' alt='thuong-mai-dien-tu'></td>";
+  echo "<td>{$product['quantity']}</td>";
+  echo "<td class='description__td'>{$product['description_and_specs']}</td>";
+  echo "<td>{$product['discount_percent']}</td>";
+  echo "<td>{$product['category_id']}</td>";
+  echo "<td>{$product['brand_id']}</td>";
+  echo "<td> <button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-{$product['id']}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
             <div class='modal fade' id='id-{$product['id']}' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
               <div class='modal-dialog'>
                 <div class='modal-content'>
@@ -157,13 +157,13 @@ include_once '../model/category.php';
                 </div>
               </div>
             </div></td>";
-            echo '</tr>';
-        }
-    } else {
-      echo "<tr>
+  echo '</tr>';
+ }
+} else {
+ echo "<tr>
       <td colspan='10' align='center'><b>no product</b></td>
       </tr>";
-    }
+}
 ?>
     </tbody>
 </table>
@@ -185,6 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title.text('Add product');
             button.text('Add');
             cancelBtn.removeClass('d-none');
+            form.css('z-index', '1');
         }
     })
     //switch input file and input text
@@ -255,13 +256,14 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addClass('edit__btn');
         button.text('Edit');
         form.removeClass('d-none');
+        form.css('z-index', '1');
         addProductBtn.addClass('d-none');
     });
     const renderItem = (item) => {
         return `<tbody>
               <tr>
                 <th scope="row">${item.id}</th>
-                <td>${item.name}</td>
+                <td class='name'>${item.name}</td>
                 <td>${item.price}</td>
                 <td>${item.size}</td>
                 <td>${item.color}</td>
@@ -312,6 +314,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     </thead>`;
 
     const callAjax = (url, data, action) => {
+        if (loading.hasClass('d-none')) {
+            loading.removeClass('d-none');
+        }
         ajaxCallPOST(url, data, function(res) {
             if (Array.isArray(res)) {
                 if (res.length === 0) {
@@ -378,7 +383,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const formData = form.serialize();
             if (!switchBtn.prop('checked')) {
-                loading.removeClass('d-none');
+                if (loading.hasClass('d-none')) {
+                    loading.removeClass('d-none');
+                }
                 let file = $('input[type="file"]')[0].files[0];
                 let formUpload = new FormData();
                 formUpload.append('file', file);
@@ -386,7 +393,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 let uploadURL = 'https://api.cloudinary.com/v1_1/ninhnam/image/upload';
                 ajaxCallUpload(uploadURL, formUpload, function(res) {
                     if (!res) {
-                        loading.addClass('d-none');
+                        if (!loading.hasClass('d-none')) {
+                            loading.addClass('d-none');
+                        }
                         return displayToast('error', 'upload image fail');
                         return;
                     }

@@ -5,11 +5,16 @@ main {
   margin-bottom: 40px;
 }
 main .products .row .product-item {
+  display: inline-flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
   text-decoration: none;
   margin-bottom: 40px;
 }
 main .products .row .product-item .product-image {
   margin: 10px 0;
+  margin-bottom: auto;
 }
 main .products .row .product-item .product-image img {
   width: 100%;
