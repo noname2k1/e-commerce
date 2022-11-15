@@ -61,9 +61,12 @@ if (isset($_SESSION['name'])) {
 ?>
                 <!-- cart -->
                 <div class="header-cart">
-                    <a href="?rdt=cart">
+                    <a href="?target=cart">
                         <img src="./assets/img/header/shopping-cart-2-line.svg" alt="cart-button" />
                     </a>
+                   <?php if (isset($_COOKIE['cart'])) {
+ echo "<div class='cart-products-num'>0</div>";
+} ?>
                 </div>
             </div>
         </header>

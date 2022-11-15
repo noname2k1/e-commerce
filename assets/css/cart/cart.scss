@@ -48,6 +48,12 @@
             &:hover {
                 background-color: var(--bg-secondary);
             }
+            &.no-product {
+                justify-content: center;
+                &:hover {
+                    background-color: transparent;
+                }
+            }
             .no-product {
                 color: var(--black-50-color);
                 text-align: center;

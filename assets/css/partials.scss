@@ -504,3 +504,26 @@ span.user {
         }
     }
 }
+
+//header-cart
+.header-cart {
+    position: relative;
+    margin-right: 10px;
+    right: 12px;
+    div.cart-products-num {
+        position: absolute;
+        top: -8px;
+        right: -16px;
+        background-color: var(--orange-color);
+        color: #fff;
+        font-size: 0.8rem;
+        padding: 2px 6px;
+        border-radius: 10px;
+        min-width: 30px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+    }
+}

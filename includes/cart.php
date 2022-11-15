@@ -1,3 +1,19 @@
+<?php
+include_once 'model/cart.php';
+$cart = false;
+if (isset($_SESSION['id'])) {
+ $id   = $_SESSION['id'];
+ $cart = get_all_products_from_cart_by_userid($id);
+ if (!$cart) {
+  create_cart($id);
+  $cart = get_all_products_from_cart_by_userid($id);
+ }
+} else {
+ echo "<script>alert('You are not logged in');window.location='sign-in.php';</script>";
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,30 +37,40 @@
                 <img src="./assets/img/arrow-left.svg" alt="thuong-mai-dien-tu" /></button>Shop cart
         </h1>
         <ul class="products-list">
-            <!-- <li class="product-item">
-                    <div class="no-product">No product found in shop cart</div>
-                </li> -->
-            <li class="product-item">
-                <input type="checkbox" name="product" />
-                <img src="./assets/img/products/image 14.png" alt="product" />
-                <div class="product-info">
-                    <h3 class="product-name">Product name</h3>
-                    <div class="action">
-                        <p class="product-price">$100</p>
-                        <div class="quantity">
-                            <button class="btn-quantity decrease">-</button>
-                            <span class="num">1</span>
-                            <button class="btn-quantity increase">+</button>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <div class="end-cart__element"></div>
-        <div class="total">
-            <span class="total-num">total: $99999999</span>
-            <button class="btn btn-primary">Process to payment</button>
+            <?php
+if (!$cart) {
+ echo "<li class='product-item no-product'>
+                    <div class='no-product'>No product found in shop cart. <a href='?target=product'>Add product.</a></div>
+                </li>";
+} else {
+ echo "<li class='product-item'>
+    <input type='checkbox' name='product' />
+    <img src='./assets/img/products/image 14.png' alt='product' />
+    <div class='product-info'>
+        <h3 class='product-name'>Product name</h3>
+        <div class='action'>
+            <p class='product-price'>$100</p>
+            <div class='quantity'>
+                <button class='btn-quantity decrease'>-</button>
+                <span class='num'>1</span>
+                <button class='btn-quantity increase'>+</button>
+            </div>
         </div>
+    </div>
+</li>";
+}
+?>
+
+        </ul>
+        <?php
+if ($cart) {
+ echo "<div class='end-cart__element'></div>
+            <div class='total'>
+                <span class='total-num'>total: $99999999</span>
+                <button class='btn btn-primary'>Process to payment</button>
+            </div>";
+}
+?>
     </section>
 </body>
 

@@ -88,7 +88,7 @@ foreach ($products as $product) {
   $current_price = $product['price'];
  }
  echo "<div class='col c-6 m-3 l-3 product'>
-        <a href='?rdt=product-detail&product={$product['id']}&name={$product['name']}' class='product-item'>
+        <a href='?target=product-detail&product={$product['id']}&name={$product['name']}' class='product-item'>
             <div class='product-image'>
                 <img src='{$product['img']}' alt='product-img' />
             </div>
@@ -254,7 +254,7 @@ foreach ($products as $product) {
   $current_price = $product['price'];
  }
  echo "<div class='col c-6 m-3 l-3 product'>
-              <a href='?rdt=product-detail&product={$product['id']}&name={$product['name']}' class='product-item'>
+              <a href='?target=product-detail&product={$product['id']}&name={$product['name']}' class='product-item'>
                             <div class='product-image'>
                                 <img src='{$product['img']}' alt='product-img' />
                             </div>

@@ -9,11 +9,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
  $prev_page                            = isset($_GET['prevpage']) ? $_GET['prevpage'] : 'index.php';
  isset($_POST['remember']) ? $remember = true : $remember = false;
  if ($user) {
-  save_user_to_session($user);
-  if ($remember) {
-   setcookie('username', $username, time() + 3600 * 24 * 30);
-   setcookie('password', $password, time() + 3600 * 24 * 30);
-  }
+  save_user_to_session($user, $remember);
   echo "<script>document.addEventListener('DOMContentLoaded',function(){
             toastr.success('login successfuly','LOGIN SYSTEM',{timeOut:3000})
         })</script>";
@@ -74,17 +70,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             <a href="#" class="forgot-password__button">
                 Fogot password
             </a>
-            <a href="sign-up.html?<?php
-$prev_page = isset($_GET['prevpage']) ? $_GET['prevpage'] : 'index.php';
-if ($prev_page !== 'index.php') {
- if (strpos($_SERVER['HTTP_REFERER'], '?') !== false) {
-  $query_str = explode('?', $_SERVER['HTTP_REFERER'], 2)[1];
-  echo $query_str;
- } else {
-  echo $prev_page;
- }
-}
-?>" class="sign-up__button">Sign up</a>
+            <a href="sign-up.html" class="sign-up__button">Sign up</a>
             <p>or</p>
             <a href="#" class="social-login__button">
                 <img src="assets/img/google-icon.svg" alt="thuong-mai-dien-tu" />Continue with Google

@@ -80,3 +80,10 @@ function delete_user($id)
  $result = pdo_execute($sql);
  return $result;
 }
+
+function user_logout($page_redirect_to)
+{
+ session_destroy();
+ setcookie('user', '', time() - 3600, '/');
+ header("location: " . $page_redirect_to . " ");
+}

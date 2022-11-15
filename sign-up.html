@@ -145,7 +145,6 @@
         <script src="assets/js/execute.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const oldURL = window.location.search.substring(1);
                 validateForm(function () {
                     ajaxCallPOST(
                         'sign-up.php',
@@ -157,16 +156,8 @@
                                     timeOut: 3000,
                                 });
                                 setTimeout(function () {
-                                    if (oldURL) {
-                                        window.location.href =
-                                            'http://' + oldURL;
-                                    } else {
-                                        window.location.href =
-                                            document.querySelector(
-                                                'a.go-home'
-                                            ).href;
-                                    }
-                                }, 1000);
+                                    window.location.href = 'sign-in.php';
+                                }, 3000);
                             } else {
                                 toastr.error(res, 'REGISTER SYSTEM', {
                                     timeOut: 3000,

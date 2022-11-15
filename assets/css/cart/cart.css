@@ -50,6 +50,12 @@
 #cart-container ul li:hover {
   background-color: var(--bg-secondary);
 }
+#cart-container ul li.no-product {
+  justify-content: center;
+}
+#cart-container ul li.no-product:hover {
+  background-color: transparent;
+}
 #cart-container ul li .no-product {
   color: var(--black-50-color);
   text-align: center;

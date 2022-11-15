@@ -1,26 +1,26 @@
 <?php
 include_once '../model/profile.php';
-// change includes file of admin 
-$rdr = '';
-if (isset($_GET['rdr'])) {
-    $rdr = $_GET['rdr'];
+include_once '../model/user.php';
+// change includes file of admin
+$target = '';
+if (isset($_GET['target'])) {
+ $target = $_GET['target'];
 } else {
-    $rdr = 'user';
+ $target = 'user';
 }
 
 //load profile
 $profile = [];
-if(isset($_SESSION['id'])){
-    $profile = get_profile_by_userid($_SESSION['id']);
-    $_SESSION['profile_id'] = $profile['id'];
-    $_SESSION['name'] = $profile['name'];
-    $_SESSION['img'] = $profile['img'];
+if (isset($_SESSION['id'])) {
+ $profile                = get_profile_by_userid($_SESSION['id']);
+ $_SESSION['profile_id'] = $profile['id'];
+ $_SESSION['name']       = $profile['name'];
+ $_SESSION['img']        = $profile['img'];
 }
 
 // handle logout
 if (isset($_POST['logout']) && $_POST['logout'] == true) {
-    session_destroy();
-    header('Location: sign-in.php');
+ user_logout('sign-in.php');
 }
 ?>
 
@@ -93,30 +93,30 @@ if (isset($_POST['logout']) && $_POST['logout'] == true) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $rdr === 'user' ? 'active' : '' ?>" aria-current="page"
-                            href="?rdr=user"><i class="bi bi-people-fill"></i>user</a>
+                        <a class="nav-link <?php echo $target === 'user' ? 'active' : '' ?>" aria-current="page"
+                            href="?target=user"><i class="bi bi-people-fill"></i>user</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $rdr === 'product' ? 'active' : '' ?>" href="?rdr=product"><i
+                        <a class="nav-link <?php echo $target === 'product' ? 'active' : '' ?>" href="?target=product"><i
                                 class="bi bi-cart-fill"></i>product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $rdr === 'category' ? 'active' : '' ?>" href="?rdr=category"><i
+                        <a class="nav-link <?php echo $target === 'category' ? 'active' : '' ?>" href="?target=category"><i
                                 class="bi bi-grid-1x2-fill"></i>category</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $rdr === 'brand' ? 'active' : '' ?>" href="?rdr=brand"><i
+                        <a class="nav-link <?php echo $target === 'brand' ? 'active' : '' ?>" href="?target=brand"><i
                                 class="bi bi-stars"></i>brand</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $rdr === 'profile' ? 'active' : '' ?>" href="?rdr=profile"><i
+                        <a class="nav-link <?php echo $target === 'profile' ? 'active' : '' ?>" href="?target=profile"><i
                                 class="bi bi-person-badge-fill"></i>profile</a>
                     </li>
                 </ul>
                 <div class="dropdown ms-auto">
                     <a class="nav-link dropdown-toggle d-flex align-items-center user" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <p><?php echo $_SESSION['name']?> (<?php echo $_SESSION['role'] ?>) </p>
+                        <p><?php echo $_SESSION['name'] ?> (<?php echo $_SESSION['role'] ?>) </p>
                         <div class="avatar">
                             <img src="<?php echo $_SESSION['img'] ?>" alt="thuong-mai-dien-tu">
                         </div>

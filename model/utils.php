@@ -1,6 +1,7 @@
 <?php
 //connect to PDO
 include_once 'profile.php';
+include_once 'user.php';
 $status = "prod";
 function connect_to_mysql_using_PDO()
 {
@@ -92,13 +93,28 @@ function pdo_last_insert($table_name)
  }
 }
 
-function save_user_to_session($user)
+function save_user_to_session($user, $remember)
 {
  //save user info to session
- $_SESSION['user']      = $user;
- $profile               = get_profile_by_userid($user['id']);
+ $profile = get_profile_by_userid($user['id']);
+ if (!$profile || $profile == null || (is_string($profile) && str_contains((string)$profile, 'error'))) {
+  user_logout('sign-in.php');
+ }
  $_SESSION['profileid'] = $profile['id'];
  $_SESSION['id']        = $user['id'];
  $_SESSION['role']      = $user['role'];
  $_SESSION['name']      = $profile['name'];
+ $_SESSION['img']       = $profile['img'];
+ if ($remember) {
+  //save user info to cookie
+  $data_to_save = "id={$user['id']}&profileid={$profile['id']}&role={$user['role']}&name={$profile['name']}&img={$profile['img']}";
+  setcookie('user', $data_to_save, time() + 60 * 60 * 24 * 30, '/');
+  //set session expire time for 30 days
+  $days               = 30;
+  $_SESSION['expire'] = time() + 60 * 60 * 24 * $days;
+ } else {
+  //set session expire time for 30 minutes
+  $minutes            = 30;
+  $_SESSION['expire'] = time() + 60 * $minutes;
+ }
 }

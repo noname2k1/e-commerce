@@ -11,8 +11,8 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cfpa
  if ($password === $cfpassword) {
   $insert = user_register($username, $password, $cfpassword, $email, 'user');
   if ($insert === true) {
-   $my_user = get_user_by_username_and_password($username, $password);
-   save_user_to_session($my_user);
+//    $my_user = get_user_by_username_and_password($username, $password);
+//    save_user_to_session($my_user);
    $success_str = 'Sign up successfully!';
    echo json_encode($success_str);
   } else {

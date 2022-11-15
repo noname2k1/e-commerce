@@ -452,4 +452,26 @@ span.user .user-menu ul input[type=submit] {
   border: none;
   width: 100%;
   font-size: 1rem;
+}
+
+.header-cart {
+  position: relative;
+  margin-right: 10px;
+  right: 12px;
+}
+.header-cart div.cart-products-num {
+  position: absolute;
+  top: -8px;
+  right: -16px;
+  background-color: var(--orange-color);
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 30px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
 }/*# sourceMappingURL=partials.css.map */
