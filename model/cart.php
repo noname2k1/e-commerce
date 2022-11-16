@@ -1,25 +1,12 @@
 <?php
 include_once 'utils.php';
-function get_all_products_from_cart_by_userid($id)
+include_once 'product.php';
+//cart
+function get_cart_by_userid($userid)
 {
- $sql  = "SELECT * FROM cart WHERE userid = '{$id}'";
+ $sql  = "SELECT * FROM cart WHERE userid = '{$userid}'";
  $cart = pdo_fetch_one($sql);
- if ($cart != null) {
-  if ($cart['data'] != null) {
-   $cartArray        = json_decode($cart['data'], true);
-   $sql              = "SELECT * FROM product WHERE id IN (" . implode(',', array_keys($cart)) . ")";
-   $products_in_cart = pdo_fetch_all($sql);
-  } else {
-   return false;
-  }
-  return [
-   'cart'     => $cartArray,
-   'products' => $products_in_cart,
-
-  ];
- } else {
-  return false;
- }
+ return $cart;
 }
 
 function create_cart($userid)
@@ -29,9 +16,54 @@ function create_cart($userid)
  return $result;
 }
 
-function update_cart_by_userid($id, $data)
+//cart_item
+
+function get_all_cart_item_of_cart($cart_id)
 {
- $sql    = "UPDATE cart SET data = '{$data}' where userid = '{$id}'";
+ $sql        = "SELECT * FROM cart_item WHERE cart_id = '{$cart_id}'";
+ $cart_items = pdo_fetch_all($sql);
+ if (!$cart_items || $cart_items == null) {
+  return null;
+ }
+ $result = [];
+ foreach ($cart_items as $cart_item) {
+  $product = get_product_by_id($cart_item['product_id']);
+  if ($product) {
+   $product['cart_item_id'] = $cart_item['id'];
+   $product['quantity']     = $cart_item['quantity'];
+   $result[]                = $product;
+  }
+ }
+ return $result;
+}
+
+function get_all_cart_items_by_userid($userid)
+{
+ $cart = get_cart_by_userid($userid);
+ if (!$cart || $cart == null) {
+  return null;
+ }
+ $cart_id = $cart['id'];
+ return get_all_cart_item_of_cart($cart_id);
+}
+
+function add_cart_item($cart_id, $product_id, $quantity)
+{
+ $sql    = "INSERT INTO cart_item(product_id,quantity,cart_id) VALUES ('{$product_id}','{$quantity}','{$cart_id}')";
+ $result = pdo_execute($sql);
+ return $result;
+}
+
+function update_quantity__cart_item($id, $quantity)
+{
+ $sql    = "UPDATE cart_item SET quantity = {$quantity} where id = '{$id}'";
+ $result = pdo_execute($sql);
+ return $result;
+}
+
+function delete_cart_item($id)
+{
+ $sql    = "DELETE FROM cart_item WHERE id = '{$id}'";
  $result = pdo_execute($sql);
  return $result;
 }

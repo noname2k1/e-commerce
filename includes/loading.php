@@ -15,6 +15,10 @@
     z-index: 999;
 }
 
+.loading.d-none {
+    display: none;
+}
+
 .loading img {
     width: 40px;
     height: 40px;
@@ -30,5 +34,6 @@
 }
 </style>
 <div class="loading d-none">
-    <img src="../assets/img/loading.gif" alt="thuong-mai-dien-tu" />
+    <img src="https://res.cloudinary.com/ninhnam/image/upload/v1668532324/e-commerce/loading_yqlyyi.gif"
+        alt="thuong-mai-dien-tu" />
 </div>

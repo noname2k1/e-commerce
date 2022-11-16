@@ -81,7 +81,7 @@
 </footer>
 <!-- End-Footer -->
 <?php
-include_once '../includes/loading.php';
+include_once 'includes/loading.php';
 ?>
 <script src='assets/js/execute.js'></script>
 <!-- <script src='assets/js/Toast.js'></script> -->

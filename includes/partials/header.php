@@ -1,5 +1,7 @@
 <?php
 //path: includes\partials\header.php
+include_once 'model/cart.php';
+$cart_items = get_all_cart_items_by_userid($_SESSION['id']);
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +19,7 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/grid/grid.css" />
     <link rel="stylesheet" href="assets/css/partials.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body>
@@ -42,7 +45,7 @@
                     <img src="./assets/img/header/search-icon.svg" alt="search-icon" />
                 </div>
                 <!-- check user logged in -->
-<?php
+                <?php
 $curent_page_url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 if (isset($_SESSION['name'])) {
  echo "<span class='user'><img src='./assets/img/user.svg' alt='thuong-mai-dien-tu'>Hi,{$_SESSION['name']}
@@ -64,8 +67,8 @@ if (isset($_SESSION['name'])) {
                     <a href="?target=cart">
                         <img src="./assets/img/header/shopping-cart-2-line.svg" alt="cart-button" />
                     </a>
-                   <?php if (isset($_COOKIE['cart'])) {
- echo "<div class='cart-products-num'>0</div>";
+                    <?php if (!empty($cart_items)) {
+ echo "<div class='cart-products-num'>" . count($cart_items) . "</div>";
 } ?>
                 </div>
             </div>

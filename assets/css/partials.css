@@ -197,6 +197,7 @@ nav.categories-nav .nav-item span {
     position: fixed;
     inset: 0;
     top: unset;
+    z-index: 1;
     bottom: -1px;
     align-items: center;
     height: var(--mobile-nav-height);

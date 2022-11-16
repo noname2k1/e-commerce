@@ -1,3 +1,2 @@
 # Defines 404 error pages content:
-#ErrorDocument 404 http://localhost/e-commerce/404.php
-
+ErrorDocument 404 http://localhost/e-commerce/404.php

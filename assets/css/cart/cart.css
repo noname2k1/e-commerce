@@ -1,7 +1,11 @@
 #cart-container {
   min-height: 500px;
-  height: 100vh;
   position: relative;
+}
+@media screen and (min-width: 768px) {
+  #cart-container {
+    height: calc(100vh - 86px + 6px);
+  }
 }
 #cart-container h1 {
   position: relative;
@@ -44,11 +48,12 @@
   margin-bottom: 4px;
   padding: 10px;
   border-radius: 4px;
+  position: relative;
   display: flex;
   align-items: center;
 }
 #cart-container ul li:hover {
-  background-color: var(--bg-secondary);
+  background-color: var(--white-15-color);
 }
 #cart-container ul li.no-product {
   justify-content: center;
@@ -75,37 +80,61 @@
   font-size: 25px;
   font-weight: 600;
 }
-#cart-container ul li .product-info .action {
+#cart-container ul li .product-info .infor {
   margin-top: 16px;
   display: flex;
 }
-#cart-container ul li .product-info .action .product-price {
+#cart-container ul li .product-info .infor .product-price {
   font-size: 25px;
   font-weight: 600;
   margin-right: 28px;
 }
-#cart-container ul li .product-info .action .quantity {
+#cart-container ul li .product-info .infor .quantity {
   display: flex;
   align-items: center;
 }
-#cart-container ul li .product-info .action .quantity .btn-quantity {
+#cart-container ul li .product-info .infor .quantity .btn-quantity {
   width: 24px;
   height: 24px;
   border-radius: 50%;
 }
-#cart-container ul li .product-info .action .quantity .btn-quantity.decrease {
+#cart-container ul li .product-info .infor .quantity .btn-quantity.decrease {
   border: 1.5px solid var(--blue-color);
   background: #fff;
 }
-#cart-container ul li .product-info .action .quantity .btn-quantity.increase {
+#cart-container ul li .product-info .infor .quantity .btn-quantity.increase {
   background: var(--blue-color);
   color: #fff;
 }
-#cart-container ul li .product-info .action .quantity .num {
+#cart-container ul li .product-info .infor .quantity .num {
   padding: 0 10px;
+}
+#cart-container ul li:hover .delete-cart-item {
+  display: block;
+}
+#cart-container ul li input[type=checkbox][name=productid]:checked ~ .delete-cart-item {
+  display: block;
+}
+#cart-container ul li .delete-cart-item {
+  position: absolute;
+  right: 10px;
+  background: red;
+  color: #fff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: none;
+}
+#cart-container ul li .delete-cart-item:hover {
+  background: #a20000;
 }
 #cart-container .end-cart__element {
   height: 86px;
+}
+@media screen and (min-width: 768px) {
+  #cart-container .end-cart__element {
+    display: none;
+  }
 }
 #cart-container .total {
   display: flex;

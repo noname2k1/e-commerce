@@ -118,3 +118,14 @@ function save_user_to_session($user, $remember)
   $_SESSION['expire'] = time() + 60 * $minutes;
  }
 }
+
+function format_currency($number, $currency = 'VND', $pos)
+{
+ $number = (float)$number;
+ $number = number_format($number, 0, ',', '.');
+ if ($pos == 'left') {
+  return $currency . ' ' . $number;
+ } else {
+  return $number . ' ' . $currency;
+ }
+}

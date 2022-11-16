@@ -2,20 +2,20 @@
 //path: product\product-detail.php
 include_once 'model/product.php';
 if (isset($_GET['product']) && isset($_GET['name'])) {
-    $id   = $_GET['product'];
-    $name = $_GET['name'];
-    $data = get_product_by_id_and_name($id, $name);
+ $id   = $_GET['product'];
+ $name = $_GET['name'];
+ $data = get_product_by_id_and_name($id, $name);
 
-    if (!$data) {
-        $error_uri = 'http://localhost/404.php';
-        echo "<script type='text/javascript'>document.location.href='{$error_uri}';</script>";
-    } else {
-        $product = $data;
-    }
-    // print_r($product);
+ if (!$data) {
+  $error_uri = 'http://localhost/404.php';
+  echo "<script type='text/javascript'>document.location.href='{$error_uri}';</script>";
+ } else {
+  $product = $data;
+ }
+ // print_r($product);
 } else {
-    $error_uri = 'http://localhost/404.php';
-    echo "<script type='text/javascript'>document.location.href='{$error_uri}';</script>";
+ $error_uri = 'http://localhost/404.php';
+ echo "<script type='text/javascript'>document.location.href='{$error_uri}';</script>";
 }
 $page_title = $_GET['target'];
 
@@ -45,6 +45,7 @@ $page_title = $_GET['target'];
         </div>
         <!-- product-detail -->
         <div class="product-wrapper">
+            <input type="hidden" name="id" value="<?php echo $product['id'] ?>" class="product-id">
             <!-- bigest image -->
             <div class="current-image">
                 <img src="<?php echo $product['img'] ?>" alt="thuong-mai-dien-tu" />
@@ -60,13 +61,13 @@ $page_title = $_GET['target'];
                         data-price='<?php echo "{$product['current_price']}" ?>'><?php echo number_format($product['current_price'], 0, ',', '.') . 'đ' ?></span>
                     <?php
 if ($product['discount_percent'] > 0) {
-    echo '<span class="old-price">' . number_format($product['before_price'], 0, ',', '.') . 'đ</span>';
+ echo '<span class="old-price">' . number_format($product['before_price'], 0, ',', '.') . 'đ</span>';
 }
 ?>
                 </div>
                 <?php
 if ($product['discount_percent'] > 0) {
-    echo '<div class="discount-percent">disc.' . $product['discount_percent'] . '%</div>';
+ echo '<div class="discount-percent">disc.' . $product['discount_percent'] . '%</div>';
 }
 ?>
                 <div class="product-quantitys"><?php echo $product['quantity'] ? $product['quantity'] : '0' ?></div>
@@ -80,12 +81,12 @@ if ($product['discount_percent'] > 0) {
                         <?php
 $size = explode(',', $product['size']);
 if ($size) {
-    echo "<option value='{$size[0]}'>Size</option>";
-    foreach ($size as $item) {
-        echo '<option value="' . $item . '">' . $item . '</option>';
-    }
+ echo "<option value='{$size[0]}'>Size</option>";
+ foreach ($size as $item) {
+  echo '<option value="' . $item . '">' . $item . '</option>';
+ }
 } else {
-    echo "<option value=''>Size</option>";
+ echo "<option value=''>Size</option>";
 }
 ?>
                     </select>
@@ -93,12 +94,12 @@ if ($size) {
                         <?php
 $color = explode(',', $product['color']);
 if ($color[0] === '') {
-    echo "<option value=''>Color</option>";
+ echo "<option value=''>Color</option>";
 } else {
-    echo "<option value='{$color[0]}'>Color</option>";
-    foreach ($color as $item) {
-        echo '<option value="' . $item . '">' . $item . '</option>';
-    }}
+ echo "<option value='{$color[0]}'>Color</option>";
+ foreach ($color as $item) {
+  echo '<option value="' . $item . '">' . $item . '</option>';
+ }}
 ?>
                     </select>
                 </div>
@@ -113,13 +114,13 @@ if ($color[0] === '') {
                 <div class="shop">
                     <?php
 if (!$product['seller']) {
-    echo "<div class='shop-avatar'>
+ echo "<div class='shop-avatar'>
                                         <img src='https://res.cloudinary.com/ninhnam/image/upload/v1667999661/e-commerce/toppng.com-anonymous-freetoedit-anonymous-hacker-mask-240x316_g1frmt.png'
                                         alt='thuong-mai-dien-tu' />
                                     </div>
                                     <h3 class='shop-name'>Admin / Moderator</h3>";
 } else {
-    echo "<div class='shop-avatar'>
+ echo "<div class='shop-avatar'>
                                    <a href='#'><img src='{$product['seller']['img']}'alt='thuong-mai-dien-tu' /></a>
                                     </div>
                                 <h3 class='shop-name'>{$product['seller']['name']}</h3>";
@@ -149,38 +150,38 @@ if (!$product['seller']) {
 
         <?php
 if (isset($product['description_and_specs'])) {
-    $desc_and_specs = json_decode($product['description_and_specs'], true);
-    // var_dump($product['description_and_specs']);
-    // var_dump(json_decode($product['description_and_specs']));
-    // var_dump(json_last_error());
-    // var_dump(json_last_error_msg());
-    // description
-    if ($desc_and_specs) {
-        if ($desc_and_specs['description'] !== null) {
-            $desc_lines = explode(',', $desc_and_specs['description']);
-            echo "<div class='product-description'>
+ $desc_and_specs = json_decode($product['description_and_specs'], true);
+ // var_dump($product['description_and_specs']);
+ // var_dump(json_decode($product['description_and_specs']));
+ // var_dump(json_last_error());
+ // var_dump(json_last_error_msg());
+ // description
+ if ($desc_and_specs) {
+  if ($desc_and_specs['description'] !== null) {
+   $desc_lines = explode(',', $desc_and_specs['description']);
+   echo "<div class='product-description'>
                         <h2 class='title'>Description</h2>
                         <ul class='desc-list'>";
-            foreach ($desc_lines as $line) {
-                echo "<li class='desc-item'>$line</li>";
-            }
-            echo "</ul>
+   foreach ($desc_lines as $line) {
+    echo "<li class='desc-item'>$line</li>";
+   }
+   echo "</ul>
                             </div>";
 
-        }
-        //specs
-        if ($desc_and_specs['specs'] !== null) {
-            $specs_lines = explode(',', $desc_and_specs['specs']);
-            echo "<div class='product-specs'>
+  }
+  //specs
+  if ($desc_and_specs['specs'] !== null) {
+   $specs_lines = explode(',', $desc_and_specs['specs']);
+   echo "<div class='product-specs'>
                         <h2 class='title'>Specs</h2>
                         <ul>";
-            foreach ($specs_lines as $line) {
-                echo "<li>$line</li>";
-            }
-            echo "</ul>
+   foreach ($specs_lines as $line) {
+    echo "<li>$line</li>";
+   }
+   echo "</ul>
                             </div>";
-        }
-    }
+  }
+ }
 }
 
 ?>
@@ -269,6 +270,7 @@ if (isset($product['description_and_specs'])) {
         }
         updateTotal();
     });
-    console.log(document.cookie)
+    // console.log(document.cookie)
     </script>
+    <script src='assets/js/product-detail.js'></script>
 </body>
