@@ -24,6 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // dataType: 'json',
             success: function (cartItems) {
                 const parseCartItems = JSON.parse(cartItems);
+                if (parseCartItems === 'You must login to use cart') {
+                    return toastr.warning(parseCartItems, 'ADD TO CART', {
+                        timeOut: 2000,
+                    });
+                }
                 if (parseCartItems) {
                     toastr.success('Add to cart successfully', 'ADD TO CART', {
                         timeOut: 2000,
@@ -33,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     toastr.error('Add to cart failed', 'ADD TO CART', {
                         timeOut: 2000,
                     });
-                // toastr.options.closeButton = true;
+                toastr.options.closeButton = true;
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log(textStatus + ': ' + errorThrown);
