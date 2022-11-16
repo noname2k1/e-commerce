@@ -23,11 +23,11 @@ include_once '../model/category.php';
     </div>
     <div class="row mt-3">
         <div class="col">
-            <input type="text" class="form-control" placeholder="size phân cách bởi dấu , " aria-label="size"
+            <input type="text" class="form-control" placeholder="size phân cách bởi dấu ; " aria-label="size"
                 name="size" required />
         </div>
         <div class="col">
-            <input type="text" class="form-control" placeholder="màu phân cách bởi dấu , " aria-label="color"
+            <input type="text" class="form-control" placeholder="màu phân cách bởi dấu ; " aria-label="color"
                 name="color" required />
         </div>
     </div>
@@ -43,13 +43,13 @@ include_once '../model/category.php';
     <div class="mb-3">
         <label for="description" class="form-label">description</label>
         <textarea class="form-control" id="description" rows="3"
-            placeholder="description(mô tả): nhiều dòng mô tả - mỗi dòng cách nhau bởi dấu ," name="description"
+            placeholder="description(mô tả): nhiều dòng mô tả - mỗi dòng cách nhau bởi dấu ;" name="description"
             required></textarea>
     </div>
     <div class="mb-3">
         <label for="specs" class="form-label">specs</label>
         <textarea class="form-control" id="specs" rows="3"
-            placeholder="đặc điểm: nếu nhiều đặc điểm - mỗi đặc điểm cách nhau bởi dấu ," name="specs"
+            placeholder="đặc điểm: nếu nhiều đặc điểm - mỗi đặc điểm cách nhau bởi dấu ;" name="specs"
             required></textarea>
     </div>
     <div class="mb-3 row">
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
         addProductBtn.addClass('d-none');
     });
     const renderItem = (item) => {
-        return `<tbody>
+        return `
               <tr>
                 <th scope="row">${item.id}</th>
                 <td class='name'>${item.name}</td>
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 </td>
               </tr>
-            </tbody>`;
+           `;
     };
     const tableHeader = `<thead>
                         <tr>

@@ -109,6 +109,16 @@
 #cart-container ul li .product-info .infor .quantity .num {
   padding: 0 10px;
 }
+#cart-container ul li .product-info .infor .specs {
+  border: 1px solid #000;
+  padding-left: 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+#cart-container ul li .product-info .infor .specs span {
+  margin-right: 10px;
+}
 #cart-container ul li:hover .delete-cart-item {
   display: block;
 }

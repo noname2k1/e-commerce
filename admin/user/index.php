@@ -80,6 +80,7 @@ function fetch_all_user()
  if ($user_data) {
   foreach ($user_data as $row) {
    if (isset($_SESSION['id'])) {
+    $GLOBALS['id'] = $_SESSION['id'];
     if ($_SESSION['id'] == $row['id']) {
      $me = true;
     } else {
@@ -168,10 +169,14 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addClass('edit__btn')
     })
     const renderItem = (item) => {
-        return `<tbody>
+        const myId = <?php
+echo $GLOBALS['id'];
+?>;
+        const me = myId == item.id ? '<span class="badge bg-danger ms-1">me</span>' : '';
+        return `
                   <tr>
                     <th scope="row">${item.id}</th>
-                    <td>${item.username}</td>
+                    <td>${item.username}${me}</td>
                     <td>${item.password}</td>
                     <td>${item.email}</td>
                     <td>${item.role}</td>
@@ -196,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     </td>
                   </tr>
-                </tbody>`
+                `
     }
     const tableHeader = `<thead>
                           <tr>
@@ -223,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const array = res.map((item, index) => {
                     return renderItem(item);
                 });
+                console.log(array)
                 $('table').html(`${tableHeader}${array.join('')}`);
                 displayToast('success', action + ' ' + 'user success');
                 $('input[name="username"]').val('');

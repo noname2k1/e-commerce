@@ -32,6 +32,8 @@ function get_all_cart_item_of_cart($cart_id)
    if ($product) {
     $product['cart_item_id'] = $cart_item['id'];
     $product['quantity']     = $cart_item['quantity'];
+    $product['color']        = $cart_item['color'];
+    $product['size']         = $cart_item['size'];
     $result[]                = $product;
    }
   }
@@ -49,9 +51,9 @@ function get_all_cart_items_by_userid($userid)
  return get_all_cart_item_of_cart($cart_id);
 }
 
-function add_cart_item($cart_id, $product_id, $quantity)
+function add_cart_item($cart_id, $product_id, $color, $size, $quantity)
 {
- $sql    = "INSERT INTO cart_item(product_id,quantity,cart_id) VALUES ('{$product_id}','{$quantity}','{$cart_id}')";
+ $sql    = "INSERT INTO cart_item(product_id,color,size,quantity,cart_id) VALUES ('{$product_id}','{$color}','{$size}','{$quantity}','{$cart_id}')";
  $result = pdo_execute($sql);
  return $result;
 }

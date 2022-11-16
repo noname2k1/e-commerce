@@ -51,6 +51,7 @@ if (!$cart_items || $cart_items == null) {
  foreach ($cart_items as $cart_item) {
   $raw_price = $cart_item['price'] * $cart_item['quantity'];
   $price     = format_currency($raw_price, 'đ', 'right');
+  $size      = $cart_item['size'] == null || $cart_item['size'] == 0 ? false : $cart_item['size'];
   echo "<li class='product-item'>
         <input type='checkbox' name='productid' value='{$cart_item['cart_item_id']}' data-price='{$raw_price}'/>
         <img src='{$cart_item['img']}' alt='thương-mại-điện-tử-e-commerce' />
@@ -61,6 +62,9 @@ if (!$cart_items || $cart_items == null) {
                 <div class='quantity'>
                     <span class='num'>x{$cart_item['quantity']}</span>
                 </div>
+                <div class='specs'>" .
+   "<span class='color'>color: {$cart_item['color']}</span>" . ($size ? "<span class='size'>size: {$size}</span>" : "") .
+   "</div>
             </div>
         </div>
         <button class='delete-cart-item' data-cart-item-id='{$cart_item['cart_item_id']}'>X</button>

@@ -161,10 +161,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const renderItem = (item) => {
-        return `<tbody>
+        const myID = <?php if (isset($_SESSION['id'])) {
+ echo $_SESSION['id'];
+} ?>;
+        const me = item.userid == myID ? `<span class="badge bg-danger ms-1">me</span>` : '';
+        return `
                   <tr>
                     <td scope="col">${item.id}</td>
-                    <td scope="col">${item.name}</td>
+                    <td scope="col">${item.name}${me}</td>
                     <td scope="col"><img src="${item.img}" alt="thuong-mai-dien-tu" /></td>
                     <td scope="col">${item.createdAt}</td>
                     <td scope="col">${item.updatedAt}</td>
@@ -174,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button>
                     </td>
                   </tr>
-                </tbody>`
+                `
     }
     const tableHeader = `<thead>
                             <tr>

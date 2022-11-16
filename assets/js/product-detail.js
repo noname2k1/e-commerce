@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let quantity = $('span.quantity-num').text();
     const productid = $('input[name="id"].product-id').val();
     const headerCart = $('.header-cart');
+    const size = $('select[name="size"]').val();
+    const color = $('select[name="color"]').val();
     $('span.quantity-num').on('DOMSubtreeModified', function () {
         quantity = $('span.quantity-num').text();
     });
@@ -17,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
         let data = {
             quantity,
             productid,
+            size,
+            color,
         };
         const opts = {
             url: 'includes/cart/add-to-cart.php',

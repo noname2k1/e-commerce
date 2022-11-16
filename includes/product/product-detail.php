@@ -79,7 +79,7 @@ if ($product['discount_percent'] > 0) {
                 <div class="choice">
                     <select name="size">
                         <?php
-$size = explode(',', $product['size']);
+$size = explode(';', $product['size']);
 if ($size) {
  echo "<option value='{$size[0]}'>Size</option>";
  foreach ($size as $item) {
@@ -92,7 +92,7 @@ if ($size) {
                     </select>
                     <select name="color">
                         <?php
-$color = explode(',', $product['color']);
+$color = explode(';', $product['color']);
 if ($color[0] === '') {
  echo "<option value=''>Color</option>";
 } else {
@@ -158,7 +158,7 @@ if (isset($product['description_and_specs'])) {
  // description
  if ($desc_and_specs) {
   if ($desc_and_specs['description'] !== null) {
-   $desc_lines = explode(',', $desc_and_specs['description']);
+   $desc_lines = explode(';', $desc_and_specs['description']);
    echo "<div class='product-description'>
                         <h2 class='title'>Description</h2>
                         <ul class='desc-list'>";
@@ -171,7 +171,7 @@ if (isset($product['description_and_specs'])) {
   }
   //specs
   if ($desc_and_specs['specs'] !== null) {
-   $specs_lines = explode(',', $desc_and_specs['specs']);
+   $specs_lines = explode(';', $desc_and_specs['specs']);
    echo "<div class='product-specs'>
                         <h2 class='title'>Specs</h2>
                         <ul>";
