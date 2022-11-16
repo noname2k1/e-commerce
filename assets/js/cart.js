@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         timeOut: 2000,
                     }
                 );
-                toastr.options.closeButton = true;
+                // toastr.options.closeButton = true;
                 headerCart.html(headerCartNum(parsecartItems));
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
