@@ -2,7 +2,7 @@
 //connect to PDO
 include_once 'profile.php';
 include_once 'user.php';
-$status = "prov";
+$status = "prod";
 function connect_to_mysql_using_PDO()
 {
  global $status;
