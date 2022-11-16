@@ -1,7 +1,9 @@
 <?php
 //path: includes\partials\header.php
 include_once 'model/cart.php';
-$cart_items = get_all_cart_items_by_userid($_SESSION['id']);
+if (isset($_SESSION['id'])) {
+ $cart_items = get_all_cart_items_by_userid($_SESSION['id']);
+}
 ?>
 
 <!DOCTYPE html>
