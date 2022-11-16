@@ -26,15 +26,17 @@ function get_all_cart_item_of_cart($cart_id)
   return null;
  }
  $result = [];
- foreach ($cart_items as $cart_item) {
-  $product = get_product_by_id($cart_item['product_id']);
-  if ($product) {
-   $product['cart_item_id'] = $cart_item['id'];
-   $product['quantity']     = $cart_item['quantity'];
-   $result[]                = $product;
+ if (is_array($cart_items)) {
+  foreach ($cart_items as $cart_item) {
+   $product = get_product_by_id($cart_item['product_id']);
+   if ($product) {
+    $product['cart_item_id'] = $cart_item['id'];
+    $product['quantity']     = $cart_item['quantity'];
+    $result[]                = $product;
+   }
   }
+  return $result;
  }
- return $result;
 }
 
 function get_all_cart_items_by_userid($userid)

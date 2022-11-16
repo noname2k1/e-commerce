@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     toastr.error('Add to cart failed', 'ADD TO CART', {
                         timeOut: 2000,
                     });
+                toastr.options.closeButton = true;
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log(textStatus + ': ' + errorThrown);

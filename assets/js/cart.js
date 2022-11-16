@@ -77,15 +77,16 @@ document.addEventListener('DOMContentLoaded', function () {
                                 .map((cartItem) => renderCartItem(cartItem))
                                 .join('')
                         );
-                        toastr.warning(
-                            'Delete cart item successfully',
-                            'DELETE CART ITEM',
-                            {
-                                timeOut: 2000,
-                            }
-                        );
                     }
                 }
+                toastr.warning(
+                    'Delete cart item successfully',
+                    'DELETE CART ITEM',
+                    {
+                        timeOut: 2000,
+                    }
+                );
+                toastr.options.closeButton = true;
                 headerCart.html(headerCartNum(parsecartItems));
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -8,7 +8,7 @@ if (isset($_SESSION['id'])) {
  $cart = get_cart_by_userid($id);
  if (!$cart || $cart == null) {
   create_cart($id);
-  $cart = create_cart($id);
+  $cart = get_cart_by_userid($id);
  }
  $total      = 0;
  $cart_items = get_all_cart_item_of_cart($cart['id']);
