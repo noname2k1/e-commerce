@@ -7,10 +7,10 @@ function connect_to_mysql_using_PDO()
 {
  global $status;
  if ($status == 'prod') {
-  $db_localhost = "o2olb7w3xv09alub.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
-  $db_name      = "mvxw697fpl0bwu4d";
-  $db_user      = "lsh6t63uwmzzjta8";
-  $db_pass      = "cfn9xj3igrnl9hbl";
+  $db_localhost = "nnsgluut5mye50or.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
+  $db_name      = "r2f65enlppckip12";
+  $db_user      = "xnal42are80k67h4";
+  $db_pass      = "bobk534rsfvltrr8";
   $db_port      = "3306";
  } else {
   $db_localhost = "localhost";
@@ -19,7 +19,7 @@ function connect_to_mysql_using_PDO()
   $db_pass      = "";
   $db_port      = "3306";
  }
- // mysql://lsh6t63uwmzzjta8:cfn9xj3igrnl9hbl@o2olb7w3xv09alub.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/mvxw697fpl0bwu4d
+//  mysql://xnal42are80k67h4:bobk534rsfvltrr8@nnsgluut5mye50or.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/r2f65enlppckip12
  $pdo_conn = new PDO("mysql:host={$db_localhost};port={$db_port};dbname={$db_name}", $db_user, $db_pass);
  $pdo_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  return $pdo_conn;
