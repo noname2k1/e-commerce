@@ -2,16 +2,16 @@
 //connect to PDO
 include_once 'profile.php';
 include_once 'user.php';
-$status = "dev";
+$status = "prod";
 function connect_to_mysql_using_PDO()
 {
  global $status;
  if ($status == 'prod') {
-  $db_localhost = "nnsgluut5mye50or.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
-  $db_name      = "r2f65enlppckip12";
-  $db_user      = "xnal42are80k67h4";
-  $db_pass      = "bobk534rsfvltrr8";
-  $db_port      = "3306";
+  $db_localhost = "containers-us-west-119.railway.app";
+  $db_name      = "railway";
+  $db_user      = "root";
+  $db_pass      = "jYPAJsZDabIzCdwxXWiJ";
+  $db_port      = "5527";
  } else {
   $db_localhost = "localhost";
   $db_name      = "ecommerce";
@@ -19,7 +19,6 @@ function connect_to_mysql_using_PDO()
   $db_pass      = "";
   $db_port      = "3306";
  }
-//  mysql://xnal42are80k67h4:bobk534rsfvltrr8@nnsgluut5mye50or.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/r2f65enlppckip12
  $pdo_conn = new PDO("mysql:host={$db_localhost};port={$db_port};dbname={$db_name}", $db_user, $db_pass);
  $pdo_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  return $pdo_conn;
