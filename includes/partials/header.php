@@ -1,8 +1,24 @@
 <?php
 //path: includes\partials\header.php
 include_once 'model/cart.php';
+include_once 'model/user.php';
 if (isset($_SESSION['id'])) {
  $cart_items = get_all_cart_items_by_userid($_SESSION['id']);
+}
+
+if (isset($_POST['change-password'])) {
+ if (isset($_POST['current-password']) && isset($_POST['new-password']) && isset($_POST['confirm-password'])) {
+  $current_password = (string)$_POST['current-password'];
+  $new_password     = (string)$_POST['new-password'];
+  $result           = change_password($current_password, $new_password);
+  if ($result == true) {
+   echo json_encode(true);
+   die;
+  } else {
+   echo json_encode($result);
+   die;
+  }
+ }
 }
 ?>
 
@@ -21,6 +37,7 @@ if (isset($_SESSION['id'])) {
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/grid/grid.css" />
     <link rel="stylesheet" href="assets/css/partials.css" />
+    <link rel="stylesheet" href="assets/css/changePassword.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
@@ -50,11 +67,11 @@ if (isset($_SESSION['id'])) {
                 <?php
 $curent_page_url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 if (isset($_SESSION['name'])) {
- echo "<span class='user'><img src='./assets/img/user.svg' alt='thuong-mai-dien-tu'>Hi,{$_SESSION['name']}
+ echo "<span class='user'><img src='./assets/img/user.svg' alt='thuong-mai-dien-tu'><span class='profile-name'>Hi,{$_SESSION['name']}</span>
                                  <div class='user-menu'>
                                     <ul>
                                         <li class='user-menu-item'>Account profile</li>
-                                        <li class='user-menu-item'>Change password</li>
+                                        <li class='user-menu-item change-password'>Change password</li>
                                         <form method='POST' action='index.php'><input name='logout' type='submit' class='user-menu-item' value='LOGOUT'/></form>
                                     </ul>
                                 </div>
@@ -76,7 +93,7 @@ if (isset($_SESSION['name'])) {
             </div>
         </header>
         <div class="header-search mobile">
-            <input type="text" name="" id="" placeholder="search for anything" />
+            <input type="text" placeholder="search for anything" />
             <img src="./assets/img/header/search-icon.svg" alt="search-icon" />
         </div>
         <!-- End-Header -->
@@ -142,7 +159,40 @@ if (isset($_SESSION['name'])) {
                 <span class="category-title">Router</span>
             </div>
         </nav>
+        <!-- change password modal begin -->
+        <div class="mainDiv d-none">
+            <div class="cardStyle">
+                <form action="" method="post" name="change-password__form" id="change-password__form">
+                    <input type="hidden" name="change-password">
+                    <h2 class="formTitle">
+                        Change Password
+                    </h2>
 
+                    <div class="inputDiv">
+                        <label class="inputLabel" for="password">Current Password</label>
+                        <input type="password" id="current-password" name="current-password" required>
+                    </div>
+                    <div class="inputDiv">
+                        <label class="inputLabel" for="password">New Password</label>
+                        <input type="password" id="new-password" name="new-password" required>
+                    </div>
+
+                    <div class="inputDiv">
+                        <label class="inputLabel" for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                    </div>
+
+                    <div class="buttonWrapper">
+                        <button type="submit" id="submitButton" class="submitButton pure-button pure-button-primary">
+                            <span>Submit</span>
+                            <span id="loader" class='d-none'></span>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <!-- change password modal end -->
         <div class="mobile-navigation">
             <div class="nav-item home active">
                 <svg width="25" height="24" viewBox="0 0 25 24" xmlns="http://www.w3.org/2000/svg" fill="transparent">

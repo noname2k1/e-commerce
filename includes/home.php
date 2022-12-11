@@ -74,7 +74,7 @@ include_once 'model/product.php';
     <div class="products grid wide">
         <div class="row">
             <?php
-$products = get_product_by_limit(8);
+$products = get_product_by_limit(0, 8);
 // print_r( $data['pagination']);
 if (count($products) < 1) {
  echo "No product found";

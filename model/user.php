@@ -74,6 +74,21 @@ function update_user($id, $username, $password, $email, $role)
  $result        = pdo_execute($sql);
  return $result;
 }
+function change_password($current_password, $new_password)
+{
+ $user = get_user_by_id($_SESSION['id']);
+ if (password_verify($current_password, $user['password'])) {
+  $options = [
+   'cost' => 12,
+  ];
+  $password_hash = password_hash($new_password, PASSWORD_BCRYPT, $options);
+  $sql           = "UPDATE user SET password = '{$password_hash}' where id = '{$user['id']}'";
+  $result        = pdo_execute($sql);
+  return $result;
+ } else {
+  return false;
+ }
+}
 function delete_user($id)
 {
  $sql    = "DELETE FROM user WHERE id = '{$id}'";

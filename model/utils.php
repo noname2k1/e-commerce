@@ -2,129 +2,129 @@
 //connect to PDO
 include_once 'profile.php';
 include_once 'user.php';
-$status = "prod";
+$status = "dev";
 function connect_to_mysql_using_PDO()
 {
- global $status;
- if ($status == 'prod') {
-  $db_localhost = "containers-us-west-119.railway.app";
-  $db_name      = "railway";
-  $db_user      = "root";
-  $db_pass      = "jYPAJsZDabIzCdwxXWiJ";
-  $db_port      = "5527";
- } else {
-  $db_localhost = "localhost";
-  $db_name      = "ecommerce";
-  $db_user      = "root";
-  $db_pass      = "";
-  $db_port      = "3306";
- }
- $pdo_conn = new PDO("mysql:host={$db_localhost};port={$db_port};dbname={$db_name}", $db_user, $db_pass);
- $pdo_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
- return $pdo_conn;
+  global $status;
+  if ($status == 'prod') {
+    $db_localhost = "containers-us-west-119.railway.app";
+    $db_name      = "railway";
+    $db_user      = "root";
+    $db_pass      = "jYPAJsZDabIzCdwxXWiJ";
+    $db_port      = "5527";
+  } else {
+    $db_localhost = "localhost";
+    $db_name      = "ecommerce";
+    $db_user      = "root";
+    $db_pass      = "";
+    $db_port      = "3306";
+  }
+  $pdo_conn = new PDO("mysql:host={$db_localhost};port={$db_port};dbname={$db_name}", $db_user, $db_pass);
+  $pdo_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  return $pdo_conn;
 }
 //fetch all using PDO
 function pdo_fetch_all($query)
 {
- $sql_arcs = array_slice(func_get_args(), 1);
- try {
-  $conn = connect_to_mysql_using_PDO();
-  $stmt = $conn->prepare($query);
-  $stmt->execute($sql_arcs);
-  $result = $stmt->fetchAll();
-  return $result;
- } catch (PDOException $e) {
-  return "error: " . $e->getMessage();
- } finally {
-  // disconnect
-  unset($conn);
- }
+  $sql_arcs = array_slice(func_get_args(), 1);
+  try {
+    $conn = connect_to_mysql_using_PDO();
+    $stmt = $conn->prepare($query);
+    $stmt->execute($sql_arcs);
+    $result = $stmt->fetchAll();
+    return $result;
+  } catch (PDOException $e) {
+    return "error: " . $e->getMessage();
+  } finally {
+    // disconnect
+    unset($conn);
+  }
 
 }
 //fetch only one  using PDO
 function pdo_fetch_one($query)
 {
- $sql_arcs = array_slice(func_get_args(), 1);
- try {
-  $conn = connect_to_mysql_using_PDO();
-  $stmt = $conn->prepare($query);
-  $stmt->execute($sql_arcs);
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
-  return $result;
- } catch (PDOException $e) {
-  return "error: " . $e->getMessage();
- } finally {
-  // disconnect
-  unset($conn);
- }
+  $sql_arcs = array_slice(func_get_args(), 1);
+  try {
+    $conn = connect_to_mysql_using_PDO();
+    $stmt = $conn->prepare($query);
+    $stmt->execute($sql_arcs);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  } catch (PDOException $e) {
+    return "error: " . $e->getMessage();
+  } finally {
+    // disconnect
+    unset($conn);
+  }
 }
 // excute INSERT,UPDATE,DELETE
 function pdo_execute($query)
 {
- $sql_arcs = array_slice(func_get_args(), 1);
- try {
-  $conn = connect_to_mysql_using_PDO();
-  $stmt = $conn->prepare($query);
-  $stmt->execute($sql_arcs);
-  return true;
- } catch (PDOException $e) {
-  return "error: " . $e->getMessage();
- } finally {
-  // disconnect
-  unset($conn);
- }
+  $sql_arcs = array_slice(func_get_args(), 1);
+  try {
+    $conn = connect_to_mysql_using_PDO();
+    $stmt = $conn->prepare($query);
+    $stmt->execute($sql_arcs);
+    return true;
+  } catch (PDOException $e) {
+    return "error: " . $e->getMessage();
+  } finally {
+    // disconnect
+    unset($conn);
+  }
 }
 
 //get last insert id
 function pdo_last_insert($table_name)
 {
- try {
-  $conn = connect_to_mysql_using_PDO();
-  $stmt = $conn->prepare("SELECT * FROM {$table_name} ORDER BY id DESC LIMIT 1");
-  $stmt->execute();
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
-  return $result;
- } catch (PDOException $e) {
-  return "error: " . $e->getMessage();
- } finally {
-  // disconnect
-  unset($conn);
- }
+  try {
+    $conn = connect_to_mysql_using_PDO();
+    $stmt = $conn->prepare("SELECT * FROM {$table_name} ORDER BY id DESC LIMIT 1");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  } catch (PDOException $e) {
+    return "error: " . $e->getMessage();
+  } finally {
+    // disconnect
+    unset($conn);
+  }
 }
 
 function save_user_to_session($user, $remember)
 {
- //save user info to session
- $profile = get_profile_by_userid($user['id']);
- if (!$profile || $profile == null || (is_string($profile) && str_contains((string)$profile, 'error'))) {
-  user_logout('sign-in.php');
- }
- $_SESSION['profileid'] = $profile['id'];
- $_SESSION['id']        = $user['id'];
- $_SESSION['role']      = $user['role'];
- $_SESSION['name']      = $profile['name'];
- $_SESSION['img']       = $profile['img'];
- if ($remember) {
-  //save user info to cookie
-  $data_to_save = "id={$user['id']}&profileid={$profile['id']}&role={$user['role']}&name={$profile['name']}&img={$profile['img']}";
-  setcookie('user', $data_to_save, time() + 60 * 60 * 24 * 30, '/');
-  //set session expire time for 30 days
-  $days               = 30;
-  $_SESSION['expire'] = time() + 60 * 60 * 24 * $days;
- } else {
-  //set session expire time for 30 minutes
-  $minutes            = 30;
-  $_SESSION['expire'] = time() + 60 * $minutes;
- }
+  //save user info to session
+  $profile = get_profile_by_userid($user['id']);
+  if (!$profile || $profile == null || (is_string($profile) && str_contains((string)$profile, 'error'))) {
+    user_logout('sign-in.php');
+  }
+  $_SESSION['profileid'] = $profile['id'];
+  $_SESSION['id']        = $user['id'];
+  $_SESSION['role']      = $user['role'];
+  $_SESSION['name']      = $profile['name'];
+  $_SESSION['img']       = $profile['img'];
+  if ($remember) {
+    //save user info to cookie
+    $data_to_save = "id={$user['id']}&profileid={$profile['id']}&role={$user['role']}&name={$profile['name']}&img={$profile['img']}";
+    setcookie('user', $data_to_save, time() + 60 * 60 * 24 * 30, '/');
+    //set session expire time for 30 days
+    $days               = 30;
+    $_SESSION['expire'] = time() + 60 * 60 * 24 * $days;
+  } else {
+    //set session expire time for 30 minutes
+    $minutes            = 30;
+    $_SESSION['expire'] = time() + 60 * $minutes;
+  }
 }
 
 function format_currency($number, $currency = 'VND', $pos)
 {
- $number = (float)$number;
- $number = number_format($number, 0, ',', '.');
- if ($pos == 'left') {
-  return $currency . ' ' . $number;
- } else {
-  return $number . ' ' . $currency;
- }
+  $number = (float)$number;
+  $number = number_format($number, 0, ',', '.');
+  if ($pos == 'left') {
+    return $currency . ' ' . $number;
+  } else {
+    return $number . ' ' . $currency;
+  }
 }

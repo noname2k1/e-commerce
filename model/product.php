@@ -43,24 +43,31 @@ function get_all_product()
  return $result;
 }
 
-function get_product_by_limit($limit)
+function get_all_product_by_mod()
 {
- $sql    = "SELECT * FROM product LIMIT {$limit}";
+ $sql    = "SELECT * FROM product WHERE display = 1";
+ $result = pdo_fetch_all($sql);
+ return $result;
+}
+
+function get_product_by_limit($start, $end)
+{
+ $sql    = "SELECT * FROM product WHERE display = 1 AND quantity > 0 AND price > 0 ORDER BY id DESC LIMIT {$start},{$end}";
  $result = pdo_fetch_all($sql);
  return $result;
 }
 
 function get_product_lastest_by_limit($limit)
 {
- $sql    = "SELECT * FROM product ORDER BY id DESC LIMIT {$limit}";
+ $sql    = "SELECT * FROM product WHERE display = 1 AND quantity > 0 AND price > 0 ORDER BY id DESC LIMIT {$limit}";
  $result = pdo_fetch_all($sql);
  return $result;
 }
 
-function add_product($name, $price, $size, $color, $img, $description_and_specs, $quantity, $discount_percent, $category_id, $brand_id)
+function add_product($name, $price, $size, $color, $img, $description_and_specs, $quantity, $discount_percent, $category_id, $brand_id, $display)
 {
  $profileid = isset($_SESSION['profileid']) ? $_SESSION['profileid'] : '';
- $sql       = "INSERT INTO product(name,price,size,color,img,description_and_specs,quantity,discount_percent,seller_id,category_id,brand_id) VALUES ('{$name}','{$price}','{$size}','{$color}','{$img}','{$description_and_specs}','{$quantity}','{$discount_percent}','{$profileid}','{$category_id}','{$brand_id}')";
+ $sql       = "INSERT INTO product(name,price,size,color,img,description_and_specs,quantity,discount_percent,seller_id,category_id,brand_id,display) VALUES ('{$name}','{$price}','{$size}','{$color}','{$img}','{$description_and_specs}','{$quantity}','{$discount_percent}','{$profileid}','{$category_id}','{$brand_id}','{$display}')";
  $result    = pdo_execute($sql);
  return $result;
 }

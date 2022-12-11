@@ -115,8 +115,7 @@ if ($brands) {
             <th scope="col">color</th>
             <th scope="col">img</th>
             <th scope="col">quantity</th>
-            <th scope="col">description & specs</th>
-            <th scope="col">disc.</th>
+            <th scope="col">discount_percent</th>
             <th scope="col">category_id</th>
             <th scope="col">brand_id</th>
             <th scope="col">options</th>
@@ -124,7 +123,7 @@ if ($brands) {
     </thead>
     <tbody>
         <?php
-$products = get_all_product(); //result is a array
+$products = isset($_SESSION['role']) && $_SESSION['role'] == 'admin' ? get_all_product() : get_all_product_by_mod(); //result is a array
 if ($products) {
  foreach ($products as $product) {
   echo '<tr>';
@@ -134,29 +133,41 @@ if ($products) {
   echo "<td>{$product['size']}</td>";
   echo "<td>{$product['color']}</td>";
   echo "<td><img src='{$product['img']}' alt='thuong-mai-dien-tu'></td>";
-  echo "<td>{$product['quantity']}</td>";
-  echo "<td class='description__td'>{$product['description_and_specs']}</td>";
+  echo "<td>";
+  echo "{$product['quantity']}";
+  echo "<input type='hidden' value='{$product['description_and_specs']}' name='desc_and_specs-{$product['id']}' />";
+  echo "</td>";
   echo "<td>{$product['discount_percent']}</td>";
   echo "<td>{$product['category_id']}</td>";
   echo "<td>{$product['brand_id']}</td>";
-  echo "<td> <button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-{$product['id']}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
-            <div class='modal fade' id='id-{$product['id']}' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-              <div class='modal-dialog'>
-                <div class='modal-content'>
-                  <div class='modal-header'>
-                    <h1 class='modal-title fs-5' id='exampleModalLabel'>Delete Category - ID: {$product['id']}</h1>
-                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                  </div>
-                  <div class='modal-body'>
-                    Are you sure delete this product?
-                  </div>
-                  <div class='modal-footer'>
-                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>No</button>
-                    <button type='button' class='btn btn-primary delete__btn'data-bs-dismiss='modal' data-id='{$product['id']}' data-name='{$product['name']}'>Yes</button>
-                  </div>
-                </div>
-              </div>
-            </div></td>";
+  echo "<td>";
+  echo "<button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button>";
+  if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+   if ($product['display'] == 0) {
+    echo '<button data-id=' . $product['id'] . ' data-display=' . $product['display'] . ' class="btn btn-warning btn-accept" ><i class="bi bi-eye-slash-fill"></i></button>&nbsp;';
+   } else {
+    echo '<button data-id=' . $product['id'] . ' data-display=' . $product['display'] . ' class="btn btn-success btn-accept" ><i class="bi bi-eye-fill"></i></button>&nbsp;';
+   }
+  }
+  echo "<button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-{$product['id']}'>delete<i class='bi bi-person-x-fill'></i></button>";
+  echo "</td>";
+  echo "<!-- Modal --><div class='modal fade' id='id-{$product['id']}' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                        <div class='modal-dialog'>
+                          <div class='modal-content'>
+                            <div class='modal-header'>
+                              <h1 class='modal-title fs-5' id='exampleModalLabel'>Delete Category - ID: {$product['id']}</h1>
+                              <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                            </div>
+                            <div class='modal-body'>
+                              Are you sure delete this product?
+                            </div>
+                            <div class='modal-footer'>
+                              <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>No</button>
+                              <button type='button' class='btn btn-primary delete__btn'data-bs-dismiss='modal' data-id='{$product['id']}' data-name='{$product['name']}'>Yes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>";
   echo '</tr>';
  }
 } else {
@@ -234,21 +245,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return item.innerText;
         });
+        console.log(cArray);
         $('input[name="id"]').val(cArray[0]);
         $('input[name="name"]').val(cArray[1]);
         $('input[name="price"]').val(cArray[2]);
         $('input[name="size"]').val(cArray[3]);
         $('input[name="color"]').val(cArray[4]);
         $('input[name="img"]').val(cArray[5].getAttribute('src'));
-        $('textarea[name="description"]').val(cArray[7].indexOf('description') !== -1 ? JSON.parse(
-                cArray[7])
-            .description : cArray[7]);
-        $('textarea[name="specs"]').val(cArray[7].indexOf('specs') !== -1 ? JSON.parse(cArray[7])
+        $('textarea[name="description"]').val($(`input:hidden[name='desc_and_specs-${cArray[0]}']`)
+            .val().indexOf('description') !== -1 ? JSON.parse(
+                $(`input:hidden[name='desc_and_specs-${cArray[0]}']`).val())
+            .description : $(`input:hidden[name='desc_and_specs-${cArray[0]}']`).val());
+        $('textarea[name="specs"]').val($(`input:hidden[name='desc_and_specs-${cArray[0]}']`).val()
+            .indexOf('specs') !== -1 ? JSON.parse($(
+                `input:hidden[name='desc_and_specs-${cArray[0]}']`).val())
             .specs : '');
         $('input[name="quantity"]').val(cArray[6]);
-        $('input[name="discount_percent"]').val(cArray[8]);
-        $('select[name="category_id"]').val(cArray[9]);
-        $('select[name="brand_id"]').val(cArray[10]);
+        $('input[name="discount_percent"]').val(cArray[7]);
+        $('select[name="category_id"]').val(cArray[8]);
+        $('select[name="brand_id"]').val(cArray[9]);
         title.text('edit product - ID: ' + cArray[0]);
         switchBtn.click();
         cancelBtn.removeClass('d-none');
@@ -259,7 +274,34 @@ document.addEventListener('DOMContentLoaded', function() {
         form.css('z-index', '1');
         addProductBtn.addClass('d-none');
     });
+    const tableHeader = `<thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Disc.</th>
+                            <th scope="col">Category ID</th>
+                            <th scope="col">Brand ID</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>`;
+
     const renderItem = (item) => {
+        const role = "<?php echo isset($_SESSION['role']) ? $_SESSION['role'] : 'user' ?>";
+        let displayBtn = '';
+        if (item['display'] == 0) {
+            displayBtn =
+                '<button data-id=' + item['id'] + ' data-display=' + item['display'] +
+                ' class="btn btn-warning btn-accept"><i class="bi bi-eye-slash-fill"></i></button>&nbsp;';
+        } else {
+            displayBtn =
+                '<button data-id=' + item['id'] + ' data-display=' + item['display'] +
+                ' class="btn btn-success btn-accept"><i class="bi bi-eye-fill"></i></button>&nbsp;';
+        }
         return `
               <tr>
                 <th scope="row">${item.id}</th>
@@ -269,12 +311,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${item.color}</td>
                 <td><img src="${item.img}" alt="thuong-mai-dien-tu"></td>
                 <td>${item.quantity}</td>
-                <td class="description__td">${item.description_and_specs}</td>
                 <td>${item.discount_percent}</td>
                 <td>${item.category_id}</td>
                 <td>${item.brand_id}</td>
                 <td>
-                <button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button><button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-${item.id}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
+                <button class='btn btn-warning open-edit__btn me-1'><i class='bi bi-pen-fill'></i>Edit</button>
+                ${role == 'admin' ? displayBtn : ''}
+                <button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#id-${item.id}'>delete<i class='bi bi-person-x-fill'></i></button><!-- Modal -->
                 <div class='modal fade' id='id-${item.id}' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
                   <div class='modal-dialog'>
                     <div class='modal-content'>
@@ -296,22 +339,6 @@ document.addEventListener('DOMContentLoaded', function() {
               </tr>
            `;
     };
-    const tableHeader = `<thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Size</th>
-                            <th scope="col">Color</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Description & Specs</th>
-                            <th scope="col">Disc.</th>
-                            <th scope="col">Category ID</th>
-                            <th scope="col">Brand ID</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>`;
 
     const callAjax = (url, data, action) => {
         if (loading.hasClass('d-none')) {
@@ -409,6 +436,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         }
     )
-
+    $(document).on('click', '.btn-accept', function() {
+        let url = 'product/displayProduct.php';
+        callAjax(url, {
+            id: $(this).data('id'),
+            display: $(this).data('display') == 1 ? 0 : 1
+        }, 'change displaymode of');
+    })
 });
 </script>
